@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -63,102 +64,44 @@ namespace MetalSlug3Trainer
         private const string MODULE_NAME = "mslug3.exe";
         private const string PROCESS_NAME = "mslug3";
 
-        private const int BASE_ADDRESS_1 = 0x000FEC38; // Used for Player 1 and everything else
-        private const int BASE_ADDRESS_2 = 0x000FEC3C; // Used for Player 2 and everything else (alt)
-        private const int BASE_ADDRESS_3 = 0x00000000; // Unused // TODO
+        private const int BASE_ADDRESS_1 = 0x000FEC38;
+        private const int BASE_ADDRESS_2 = 0x000FEC3C;
 
-        // 10A4A6A9<-- actual
-        // 10A3C6A8<-- offset points to
-        // E001     <-- difference
-        // E001 + D78 = ED79 <--correct offset
         private const int OFFSET_LEVEL_TIMER = 0xED79;
-        private const int OFFSET_CONTINUE_TIMER = 0x01F9; 
+        private const int OFFSET_CONTINUE_TIMER = 0x01F9;
+        private const int OFFSET_MISSION_COMPLETE = 0xED7C;
+        private const int OFFSET_LEVEL_SELECT_1 = 0xED7A;
+        private const int OFFSET_LEVEL_SELECT_2 = 0xED7B;
+        private const int OFFSET_DEBUG_1 = 0xF000;
+        private const int OFFSET_DEBUG_2 = 0xF001;
 
         // Player 1
         private const int OFFSET_P1_CREDITS_COUNT = 0x1003C;
-        private const int OFFSET_P1_LIVES_COUNT = 0x02BA; // Screen updates after losing a life
-        private const int OFFSET_P1_LIVES_COUNT_COMPLETE = 0x0000; // Set this offset value to 0 after setting lives.  // TODO
+        private const int OFFSET_P1_LIVES_COUNT = 0x02BA;
         private const int OFFSET_P1_INVINCIBILITY_TIMER = 0x0580;
-        // 0 = Normal
-        // 1 = Machine Gun
-        // 2 = Fat 
-        // 3 = Mummy
-        // 4 = Scuba Gear Normal
-        // 5 = Scuba Gear Machine Gun
-        // 6 = Snowman
-        // 7 = Zombie
-        // 8 = Flying(final stage)
-        // 9 = Flying(final stage)
-        // 10 = Spaceship(final stage)
-        // 11 = 
-        // 12 + Game Crash
-        // Other statuses(dropping guns, helmets, water splash, etc)
-        // "mslug3.exe"+000FEC38 58D
-        // "mslug3.exe"+000FEC38 58F
         private const int OFFSET_P1_STATUS = 0x058E;
-        //        example score: 34127856
-        //0EF36C80 = 12h
-        //0EF36C81 = 34h
-        //0EF36C82 = 56h
-        //0EF36C83 = 78h
-
-        //Base Address Offset
-        //"mslug3.exe"+000FEC38 ED18
-        //"mslug3.exe"+000FEC38 ED19
-        //"mslug3.exe"+000FEC38 ED1A
-        //"mslug3.exe"+000FEC38 ED1B
         private const int OFFSET_P1_SCORE = 0xED18;
         private const int OFFSET_P1_POWS_RESCUED = 0xED04;
-        private const int OFFSET_P1_VEHICLE_HEALTH_COUNT = 0xEC30; // Max 48
+        private const int OFFSET_P1_VEHICLE_HEALTH_COUNT = 0xEC30;
         private const int OFFSET_P1_VEHICLE_AMMO_CANON_COUNT = 0xEC38;
-        //    0 = Hand Gun
-        //    1 = Cannon
-        //    2 = Shotgun
-        //    3 = Rocket Launcher
-        //    4 = Flame Shot
-        //    5 = Heavy Machine Gun
-        //    6 = Laser Gun
-        //    7 = Super Shotgun
-        //    8 = Super Rocket Launcher
-        //    9 = Super Flame Shot
-        //    10 = Super Heavy Machine Gun
-        //    11 = Super Laser Gun
-        //    12 = Enemy Chaser
-        //    13 = Iron Lizard
-        //    14 = Dropshot
-        //    15 = Super Cannon
         private const int OFFSET_P1_WEAPON_TYPE = 0xEAF2;
         private const int OFFSET_P1_BOMB_COUNT = 0xEAF4;
-        private const int OFFSET_P1_BOMB_TYPE = 0x0000; // TODO
-        private const int OFFSET_P1_AMMO_COUNT = 0xEAFA; // 2 bytes, 0-65535(65535 = infinite)
-        private const int OFFSET_P1_CURRENT_CHARACTER = 0x0000; // TODO
+        private const int OFFSET_P1_BOMB_TYPE = 0xEAF5;
+        private const int OFFSET_P1_AMMO_COUNT = 0xEAFA;
 
         // Player 2
         private const int OFFSET_P2_CREDITS_COUNT = 0x1003D;
-        private const int OFFSET_P2_LIVES_COUNT = 0x036A; // Screen updates after losing a life
-        private const int OFFSET_P2_LIVES_COUNT_COMPLETE = 0x0000; // Set this offset value to 0 after setting lives. // TODO
+        private const int OFFSET_P2_LIVES_COUNT = 0x036A;
         private const int OFFSET_P2_INVINCIBILITY_TIMER = 0x0630;
         private const int OFFSET_P2_STATUS = 0x063E;
-        //        example score: 34127856
-        //0EF36C80 = 12h
-        //0EF36C81 = 34h
-        //0EF36C82 = 56h
-        //0EF36C83 = 78h
-
-        //Base Address Offset
-        //"mslug3.exe"+000FEC38 ED20
-        //"mslug3.exe"+000FEC38 ED21
-        //"mslug3.exe"+000FEC38 ED22
-        //"mslug3.exe"+000FEC38 ED23
         private const int OFFSET_P2_SCORE = 0xED20;
         private const int OFFSET_P2_POWS_RESCUED = 0xED0C;
-        private const int OFFSET_P2_VEHICLE_HEALTH_COUNT = 0xEC5C; // Max 48
+        private const int OFFSET_P2_VEHICLE_HEALTH_COUNT = 0xEC5C;
         private const int OFFSET_P2_VEHICLE_AMMO_CANON_COUNT = 0xEC64;
-        private const int OFFSET_P2_WEAPON_TYPE = 0x0000; // TODO
+        private const int OFFSET_P2_WEAPON_TYPE = 0xEB00;
         private const int OFFSET_P2_BOMB_COUNT = 0xEB02;
-        private const int OFFSET_P2_BOMB_TYPE = 0x0000; // TODO
+        private const int OFFSET_P2_BOMB_TYPE = 0xEB03;
         private const int OFFSET_P2_AMMO_COUNT = 0xEB08;
-        private const int OFFSET_P2_CURRENT_CHARACTER = 0x0000; // TODO
 
         #endregion
 
@@ -169,10 +112,13 @@ namespace MetalSlug3Trainer
         private IntPtr hProc = IntPtr.Zero;
         private IntPtr levelTimerAddressGlobal = IntPtr.Zero;
         private IntPtr continueTimerAddressGlobal = IntPtr.Zero;
+        private IntPtr missionCompleteAddressGlobal = IntPtr.Zero;
+        private IntPtr levelSelect1AddressGlobal = IntPtr.Zero;
+        private IntPtr levelSelect2AddressGlobal = IntPtr.Zero;
         private IntPtr livesCountP1AddressGlobal = IntPtr.Zero;
-        private IntPtr livesCountP1CompleteAddressGlobal = IntPtr.Zero;
         private IntPtr livesCountP2AddressGlobal = IntPtr.Zero;
-        private IntPtr livesCountP2CompleteAddressGlobal = IntPtr.Zero;
+        private IntPtr debug1AddressGlobal = IntPtr.Zero;
+        private IntPtr debug2AddressGlobal = IntPtr.Zero;
         private IntPtr invincibilityTimerP1AddressGlobal = IntPtr.Zero;
         private IntPtr invincibilityTimerP2AddressGlobal = IntPtr.Zero;
         private IntPtr powsRescuedP1AddressGlobal = IntPtr.Zero;
@@ -191,8 +137,8 @@ namespace MetalSlug3Trainer
         private IntPtr vehicleHealthCountP2AddressGlobal = IntPtr.Zero;
         private IntPtr creditsCountP1AddressGlobal = IntPtr.Zero;
         private IntPtr creditsCountP2AddressGlobal = IntPtr.Zero;
-        private IntPtr currentCharacterP1AddressGlobal = IntPtr.Zero;
-        private IntPtr currentCharacterP2AddressGlobal = IntPtr.Zero;
+        private IntPtr currentP1Status = IntPtr.Zero;
+        private IntPtr currentP2Status = IntPtr.Zero;
         private IntPtr scoreP1AddressGlobal = IntPtr.Zero;
         private IntPtr scoreP2AddressGlobal = IntPtr.Zero;
 
@@ -217,10 +163,10 @@ namespace MetalSlug3Trainer
             Text = "Metal Slug 3 (GOG Version) Trainer by sLeEpY9090";
             textBoxLog.Text = "Metal Slug 3 (GOG Version) Trainer by sLeEpY9090" + Environment.NewLine;
 
+            PopulateLevels();
             PopulateStatusTypes();
             PopulateWeaponTypes();
             PopulateBombTypes();
-            PopulateCharacters();
             PopulateScore();
             SetTextBoxMaxLength();
             SetDefaultTextBoxValues();
@@ -232,6 +178,97 @@ namespace MetalSlug3Trainer
         }
 
         #region Form Setup Methods
+
+        private void PopulateLevels()
+        {
+            Dictionary<int, string> levelsDictionary = new Dictionary<int, string>
+            {
+                {  0, "Stage 1: 1-1 Couples Love Land"                         },
+                {  1, "Stage 1: 2-1 Marine Diver"                              },
+                {  2, "Stage 1: 1-1 Return from Marine Diver"                  },
+                {  3, "Stage 1: 3-1 The Ship Asia"                             },
+                {  4, "Stage 1: 1-1 Return from the Ship Asia"                 },
+                {  5, "Stage 1: 1-1 DEBUG: Before the Boat"                    },
+                {  6, "Stage 1: 2-1 DEBUG: Marine Diver Midpoint"              },
+                {  7, "Stage 2: 1-1 The Midnight Wandering"                    },
+                {  8, "Stage 2: 2-1 Death Valley"                              },
+                {  9, "Stage 2: 1-1 Return from the Valley"                    },
+                { 10, "Stage 2: 3-1 Devil's Snow Cave"                         },
+                { 11, "Stage 2: 1-1 Return from the Snow Cave"                 },
+                { 12, "Stage 2: DEBUG: Mounting/Turnaround Point in Snow Cave" },
+                { 13, "Stage 2: DEBUG: Helicopter Regiment"                    },
+                { 14, "Stage 2: DEBUG: Boss 2"                                 },
+                { 15, "Stage 3: 1-1 Eyes over the Tides"                       },
+                { 16, "Stage 3: 1-2 The Blue Sea"                              },
+                { 17, "Stage 3: 1-3 Secret Factory"                            },
+                { 18, "Stage 3: 1-4 Meet the Boss"                             },
+                { 19, "Stage 3: 2-1 Undersea Cave"                             },
+                { 20, "Stage 3: 2-2 As Hard As Expected"                       },
+                { 21, "Stage 3: 3-1 Great Jumping Ostriches"                   },
+                { 22, "Stage 4: 1-1 Desert Loop"                               },
+                { 23, "Stage 4: 1-2 Climbing the Pyramid"                      },
+                { 24, "Stage 4: 1-3 Meet the Boss (Via Falling)"               },
+                { 25, "Stage 4: 2-1 Carpet Shop"                               },
+                { 26, "Stage 4: 2-2 Wine Storage and Father Inside"            },
+                { 27, "Stage 4: 2-3 Japanese Soldiers Entrance"                },
+                { 28, "Stage 4: 2-4 Japanese Soldiers"                         },
+                { 29, "Stage 4: 3-1 Underground"                               },
+                { 30, "Stage 4: 3-1 Underground Midpoint"                      },
+                { 31, "Stage 4: 3-1 Underground Midpoint 2"                    },
+                { 32, "Stage 4: 4-1 Maneater Den"                              },
+                { 33, "Stage 4: 4-2 Ruins Corridor"                            },
+                { 34, "Stage 4: 4-3 Small Room"                                },
+                { 35, "Stage 4: 4-4 Quicksand"                                 },
+                { 36, "Stage 4: 4-5 Suspended Ceiling"                         },
+                { 37, "Stage 4: 4-6 Ruins Elevator"                            },
+                { 38, "Stage 4: 1-3 Meet the Boss (Via Climbing)"              },
+                { 39, "Stage 4: 4-7 Underground Warehouse (Intro)"             },
+                { 40, "Stage 5: 1-0 Into the Sky"                              },
+                { 41, "Stage 5: 1-1 The Deep Blue Sea of Clouds"               },
+                { 42, "Stage 5: 1-2 The Morden Army's Space Base"              },
+                { 43, "Stage 5: 1-3 Stratosphere"                              },
+                { 44, "Stage 5: 1-4 The Cosmos"                                },
+                { 45, "Stage 5: 1-5 Enemy Mothership Shaft"                    },
+                { 46, "Stage 5: 1-6 Mothership Hallway"                        },
+                { 47, "Stage 5: 1-7 The Prison"                                },
+                { 48, "Stage 5: 1-8 Power Reactor Hallway"                     },
+                { 49, "Stage 5: 1-9 Fake Last Boss"                            },
+                { 50, "Stage 5: 1-A Bio-sector"                                },
+                { 51, "Stage 5: 1-B Clone Room"                                },
+                { 52, "Stage 5: 1-C Airlock Hallway"                           },
+                { 53, "Stage 5: 1-D Escape!!"                                  },
+                { 54, "Stage 5: 1-D Rootmars Battle"                           },
+                { 55, "MISSION ALL OVER"                                       },
+                { 56, "On the Sea 1"                                           },
+                { 57, "On the Sea 2"                                           },
+                { 58, "Under the Sea (Credits)"                                },
+                { 59, "Game Over (Best Tank Busters)"                          },
+                { 60, "Demo 1-1"                                               },
+                { 61, "Demo 1-2"                                               },
+                { 62, "Demo 1 End"                                             },
+                { 63, "Demo 2-1"                                               },
+                { 64, "Demo 2-2"                                               },
+                { 65, "Demo 2 End"                                             },
+                { 66, "How to Play"                                            },
+                { 67, "Test Stage - Andy the Wizard"                           },
+                { 68, "Test Stage - Taguchi"                                   },
+                { 69, "Test Stage - Nishino"                                   },
+                { 70, "Test Stage - Fujisawa Kankoku"                          },
+                { 71, "Test Stage - Tyler Yamamoto"                            },
+                { 72, "Test Stage - Mee Her"                                   },
+                { 73, "Test Stage - Arita Secret Factory"                      },
+                { 74, "Test Stage - Midnight Directions"                       },
+                { 75, "Test Stage - It's barely there"                         },
+                { 76, "Test Stage - Anmira"                                    }
+            };
+
+            comboBoxLevelSelect.Items.Clear();
+            comboBoxLevelSelect.DataSource = new BindingSource(levelsDictionary, null);
+            comboBoxLevelSelect.DisplayMember = "Value";
+            comboBoxLevelSelect.ValueMember = "Key";
+            comboBoxLevelSelect.SelectedIndex = 0;
+
+        }
 
         private void PopulateWeaponTypes()
         {
@@ -297,29 +334,29 @@ namespace MetalSlug3Trainer
                 { 10, "10 - Spaceship (final stage)"   }
             };
 
-            //comboBoxP1WeaponTypeRead.Items.Clear();
-            //comboBoxP1WeaponTypeRead.DataSource = new BindingSource(weaponTypesDictionary, null);
-            //comboBoxP1WeaponTypeRead.DisplayMember = "Value";
-            //comboBoxP1WeaponTypeRead.ValueMember = "Key";
-            //comboBoxP1WeaponTypeRead.SelectedIndex = 0;
+            comboBoxP1StatusRead.Items.Clear();
+            comboBoxP1StatusRead.DataSource = new BindingSource(statusTypesDictionary, null);
+            comboBoxP1StatusRead.DisplayMember = "Value";
+            comboBoxP1StatusRead.ValueMember = "Key";
+            comboBoxP1StatusRead.SelectedIndex = 0;
 
-            //comboBoxP2WeaponTypeRead.Items.Clear();
-            //comboBoxP2WeaponTypeRead.DataSource = new BindingSource(weaponTypesDictionary, null);
-            //comboBoxP2WeaponTypeRead.DisplayMember = "Value";
-            //comboBoxP2WeaponTypeRead.ValueMember = "Key";
-            //comboBoxP2WeaponTypeRead.SelectedIndex = 0;
+            comboBoxP1StatusWrite.Items.Clear();
+            comboBoxP1StatusWrite.DataSource = new BindingSource(statusTypesDictionary, null);
+            comboBoxP1StatusWrite.DisplayMember = "Value";
+            comboBoxP1StatusWrite.ValueMember = "Key";
+            comboBoxP1StatusWrite.SelectedIndex = 0;
 
-            //comboBoxP1WeaponTypeWrite.Items.Clear();
-            //comboBoxP1WeaponTypeWrite.DataSource = new BindingSource(weaponTypesDictionary, null);
-            //comboBoxP1WeaponTypeWrite.DisplayMember = "Value";
-            //comboBoxP1WeaponTypeWrite.ValueMember = "Key";
-            //comboBoxP1WeaponTypeWrite.SelectedIndex = 0;
+            comboBoxP2StatusRead.Items.Clear();
+            comboBoxP2StatusRead.DataSource = new BindingSource(statusTypesDictionary, null);
+            comboBoxP2StatusRead.DisplayMember = "Value";
+            comboBoxP2StatusRead.ValueMember = "Key";
+            comboBoxP2StatusRead.SelectedIndex = 0;
 
-            //comboBoxP2WeaponTypeWrite.Items.Clear();
-            //comboBoxP2WeaponTypeWrite.DataSource = new BindingSource(weaponTypesDictionary, null);
-            //comboBoxP2WeaponTypeWrite.DisplayMember = "Value";
-            //comboBoxP2WeaponTypeWrite.ValueMember = "Key";
-            //comboBoxP2WeaponTypeWrite.SelectedIndex = 0;
+            comboBoxP2StatusWrite.Items.Clear();
+            comboBoxP2StatusWrite.DataSource = new BindingSource(statusTypesDictionary, null);
+            comboBoxP2StatusWrite.DisplayMember = "Value";
+            comboBoxP2StatusWrite.ValueMember = "Key";
+            comboBoxP2StatusWrite.SelectedIndex = 0;
         }
 
         private void PopulateBombTypes()
@@ -329,7 +366,17 @@ namespace MetalSlug3Trainer
                 { 0, "0 - None"      },
                 { 1, "1 - Grenade"   },
                 { 2, "2 - Fire Bomb" },
-                { 3, "3 - Stone"     }
+                { 3, "3 - Stone"     },
+                { 4, "4 - Cannon"    },
+                { 5, "5 - Cannon"    },
+                { 6, "6 - Missile"   },
+                { 7, "7 - Bomb"      },
+                { 8, "8 - Missile"   },
+                { 9, "9 - Cannon"    },
+                { 10, "10 - Cannon"  },
+                { 11, "11 - Missile" },
+                { 12, "12 - Fire"    },
+                { 13, "13 - Laser"   },
             };
 
             comboBoxP1BombTypeRead.Items.Clear();
@@ -355,50 +402,6 @@ namespace MetalSlug3Trainer
             comboBoxP2BombTypeWrite.DisplayMember = "Value";
             comboBoxP2BombTypeWrite.ValueMember = "Key";
             comboBoxP2BombTypeWrite.SelectedIndex = 0;
-        }
-
-        private void PopulateCharacters()
-        {
-
-            Dictionary<int, string> charactersDictionary = new Dictionary<int, string>
-            {
-                {  0, " 0 - Marco Rossi"   },
-                {  1, " 1 - Tarma Roving"  },
-                {  2, " 2 - Eri Kasamoto"  },
-                {  3, " 3 - Fiolina Germi" },
-                {  4, " 4 - Marco Rossi - Special Weapon"   },
-                {  5, " 5 - Tarma Roving - Special Weapon"  },
-                {  6, " 6 - Eri Kasamoto - Special Weapon"  },
-                {  7, " 7 - Fiolina Germi - Special Weapon" },
-                {  8, " 8 - Marco Rossi - Fat"   },
-                {  9, " 9 - Tarma Roving - Fat"  },
-                { 10, "10 - Eri Kasamoto - Fat"  },
-                { 11, "11 - Fiolina Germi - Fat" }
-            };
-
-            comboBoxP1CurrentCharacterRead.Items.Clear();
-            comboBoxP1CurrentCharacterRead.DataSource = new BindingSource(charactersDictionary, null);
-            comboBoxP1CurrentCharacterRead.DisplayMember = "Value";
-            comboBoxP1CurrentCharacterRead.ValueMember = "Key";
-            comboBoxP1CurrentCharacterRead.SelectedIndex = 0;
-
-            comboBoxP1CurrentCharacterWrite.Items.Clear();
-            comboBoxP1CurrentCharacterWrite.DataSource = new BindingSource(charactersDictionary, null);
-            comboBoxP1CurrentCharacterWrite.DisplayMember = "Value";
-            comboBoxP1CurrentCharacterWrite.ValueMember = "Key";
-            comboBoxP1CurrentCharacterWrite.SelectedIndex = 0;
-
-            comboBoxP2CurrentCharacterRead.Items.Clear();
-            comboBoxP2CurrentCharacterRead.DataSource = new BindingSource(charactersDictionary, null);
-            comboBoxP2CurrentCharacterRead.DisplayMember = "Value";
-            comboBoxP2CurrentCharacterRead.ValueMember = "Key";
-            comboBoxP2CurrentCharacterRead.SelectedIndex = 0;
-
-            comboBoxP2CurrentCharacterWrite.Items.Clear();
-            comboBoxP2CurrentCharacterWrite.DataSource = new BindingSource(charactersDictionary, null);
-            comboBoxP2CurrentCharacterWrite.DisplayMember = "Value";
-            comboBoxP2CurrentCharacterWrite.ValueMember = "Key";
-            comboBoxP2CurrentCharacterWrite.SelectedIndex = 0;
         }
 
         private void PopulateScore()
@@ -429,7 +432,7 @@ namespace MetalSlug3Trainer
 
         public void SetDefaultTextBoxValues()
         {
-            textBoxLevelTimerWrite.Text = "255";
+            textBoxLevelTimerWrite.Text = "159"; // anything higher kills the player
             textBoxContinueTimerWrite.Text = "255";
 
             textBoxP1LivesCountWrite.Text = "255";
@@ -464,7 +467,7 @@ namespace MetalSlug3Trainer
             textBoxP1ScoreRead.Enabled = false;
             comboBoxP1BombTypeRead.Enabled = false;
             comboBoxP1WeaponTypeRead.Enabled = false;
-            comboBoxP1CurrentCharacterRead.Enabled = false;
+            comboBoxP1StatusRead.Enabled = false;
 
             textBoxP2LivesCountRead.Enabled = false;
             textBoxP2InvincibilityTimerRead.Enabled = false;
@@ -477,7 +480,7 @@ namespace MetalSlug3Trainer
             textBoxP2ScoreRead.Enabled = false;
             comboBoxP2BombTypeRead.Enabled = false;
             comboBoxP2WeaponTypeRead.Enabled = false;
-            comboBoxP2CurrentCharacterRead.Enabled = false;
+            comboBoxP2StatusRead.Enabled = false;
 
             textBoxModuleName.Text = MODULE_NAME;
             textBoxProcessName.Text = PROCESS_NAME;
@@ -689,8 +692,11 @@ namespace MetalSlug3Trainer
 
         private void WriteByte(IntPtr hProcess, IntPtr address, byte value)
         {
+            // Since bitconverter getbytes with a byte value handles it as a short (no overload for byte), we get 2 bytes back as a short, but we only want the first
+            // https://learn.microsoft.com/en-us/dotnet/api/system.bitconverter.getbytes?view=net-9.0#system-bitconverter-getbytes(system-int16)
             byte[] buffer = BitConverter.GetBytes(value);
-            WriteProcessMemory(hProcess, address, buffer, buffer.Length, out int bytesWritten);
+            //WriteProcessMemory(hProcess, address, buffer, buffer.Length, out int bytesWritten);
+            WriteProcessMemory(hProcess, address, buffer, buffer.Length - 1, out int bytesWritten);
         }
 
         private uint ReadUInt16(IntPtr hProcess, IntPtr address)
@@ -700,7 +706,7 @@ namespace MetalSlug3Trainer
             return BitConverter.ToUInt16(buffer, 0);
         }
 
-        private void WriteUInt16(IntPtr hProcess, IntPtr address, uint value)
+        private void WriteUInt16(IntPtr hProcess, IntPtr address, ushort value)
         {
             byte[] buffer = BitConverter.GetBytes(value);
             WriteProcessMemory(hProcess, address, buffer, buffer.Length, out int bytesWritten);
@@ -740,24 +746,29 @@ namespace MetalSlug3Trainer
                 string logEntry = $"[Metal Slug 3 Process {game.ProcessName} found in {game} with PID: {game.Id}]";
                 logEntry += Environment.NewLine;
                 logEntry += $"Start Time: {game.StartTime}";
-                logEntry += Environment.NewLine;
-                //logEntry += $"Total Processor Time: {game.TotalProcessorTime}";
-                logEntry += $"Physical Memory Usage (MB): {game.WorkingSet64 / (1024 * 1024)}";
-                logEntry += Environment.NewLine;
-                logEntry += "---------------------------------------------------";
-                logEntry += Environment.NewLine;
 
                 if (logEntry != previousLogEntry)
                 {
-                    textBoxLog.AppendText(logEntry + Environment.NewLine);
                     previousLogEntry = logEntry;
+
+                    textBoxLog.AppendText(logEntry + Environment.NewLine);
+                    textBoxLog.AppendText($"Total Processor Time: {game.TotalProcessorTime}"
+                        + Environment.NewLine);
+                    textBoxLog.AppendText($"Physical Memory Usage (MB): {game.WorkingSet64 / (1024 * 1024)}"
+                        + Environment.NewLine
+                        + "---------------------------------------------------"
+                        + Environment.NewLine);
                 }
 
                 levelTimerAddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_LEVEL_TIMER);
                 continueTimerAddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_CONTINUE_TIMER);
+                missionCompleteAddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_MISSION_COMPLETE);
+                levelSelect1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_LEVEL_SELECT_1);
+                levelSelect2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_LEVEL_SELECT_2);
+                debug1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_DEBUG_1);
+                debug2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_DEBUG_2);
 
                 livesCountP1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P1_LIVES_COUNT);
-                livesCountP1CompleteAddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P1_LIVES_COUNT_COMPLETE);
                 invincibilityTimerP1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P1_INVINCIBILITY_TIMER);
                 powsRescuedP1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P1_POWS_RESCUED);
                 weaponTypeP1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P1_WEAPON_TYPE);
@@ -767,11 +778,10 @@ namespace MetalSlug3Trainer
                 vehicleAmmoCanonCountP1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P1_VEHICLE_AMMO_CANON_COUNT);
                 vehicleHealthCountP1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P1_VEHICLE_HEALTH_COUNT);
                 scoreP1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P1_SCORE);
-                currentCharacterP1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P1_CURRENT_CHARACTER);
-                creditsCountP1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_3, OFFSET_P1_CREDITS_COUNT);
+                currentP1Status = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P1_STATUS);
+                creditsCountP1AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P1_CREDITS_COUNT);
 
                 livesCountP2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_2, OFFSET_P2_LIVES_COUNT);
-                livesCountP2CompleteAddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_2, OFFSET_P2_LIVES_COUNT_COMPLETE);
                 invincibilityTimerP2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_2, OFFSET_P2_INVINCIBILITY_TIMER);
                 powsRescuedP2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_2, OFFSET_P2_POWS_RESCUED);
                 weaponTypeP2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_2, OFFSET_P2_WEAPON_TYPE);
@@ -781,8 +791,8 @@ namespace MetalSlug3Trainer
                 vehicleAmmoCanonCountP2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_2, OFFSET_P2_VEHICLE_AMMO_CANON_COUNT);
                 vehicleHealthCountP2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_2, OFFSET_P2_VEHICLE_HEALTH_COUNT);
                 scoreP2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_2, OFFSET_P2_SCORE);
-                currentCharacterP2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_2, OFFSET_P2_CURRENT_CHARACTER);
-                creditsCountP2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_3, OFFSET_P2_CREDITS_COUNT);
+                currentP2Status = GetOffsetAddress(hProc, BASE_ADDRESS_2, OFFSET_P2_STATUS);
+                creditsCountP2AddressGlobal = GetOffsetAddress(hProc, BASE_ADDRESS_1, OFFSET_P2_CREDITS_COUNT);
 
                 #region Level Timer
 
@@ -790,17 +800,10 @@ namespace MetalSlug3Trainer
                 {
                     try
                     {
-                        byte tempByte = 0;
-                        if (int.TryParse(DisplayByteValue(hProc, continueTimerAddressGlobal, BASE_ADDRESS_1, OFFSET_CONTINUE_TIMER), out int continueTimer))
-                        {
-                            tempByte = Convert.ToByte(continueTimer);
-                        }
                         if (int.TryParse(textBoxLevelTimerWrite.Text, out int levelTimer)
                             && (levelTimer >= 0 && levelTimer <= 255))
                         {
                             WriteByte(hProc, levelTimerAddressGlobal, Convert.ToByte(levelTimer));
-                            // Write existing Continue Timer Count as it gets overwritten
-                            WriteByte(hProc, continueTimerAddressGlobal, tempByte);
                         }
                         else
                         {
@@ -860,8 +863,6 @@ namespace MetalSlug3Trainer
                         {
                             // Write P1 number of lives
                             WriteByte(hProc, livesCountP1AddressGlobal, Convert.ToByte(livesCount));
-                            // Write 0
-                            WriteByte(hProc, livesCountP1CompleteAddressGlobal, 0);
                         }
                         else
                         {
@@ -889,8 +890,6 @@ namespace MetalSlug3Trainer
                         {
                             // Write P2 number of lives
                             WriteByte(hProc, livesCountP2AddressGlobal, Convert.ToByte(livesCount));
-                            // Write 0
-                            WriteByte(hProc, livesCountP2CompleteAddressGlobal, 0);
                         }
                         else
                         {
@@ -969,17 +968,10 @@ namespace MetalSlug3Trainer
                 {
                     try
                     {
-                        byte tempByte = 0;
-                        if (int.TryParse(DisplayByteValue(hProc, powsRescuedP2AddressGlobal, BASE_ADDRESS_2, OFFSET_P2_POWS_RESCUED), out int currentPowsRescuedP2))
-                        {
-                            tempByte = Convert.ToByte(currentPowsRescuedP2);
-                        }
                         if (int.TryParse(textBoxP1POWsRescuedWrite.Text, out int powsRescued)
                             && (powsRescued >= 0 && powsRescued <= 255))
                         {
                             WriteByte(hProc, powsRescuedP1AddressGlobal, Convert.ToByte(powsRescued));
-                            // Write existing P2 POW Rescued Count as P1 POW Rescued Count is the High Byte and overwrites the P2 POW Rescued Count (Low Byte)
-                            WriteByte(hProc, powsRescuedP2AddressGlobal, tempByte);
                         }
                         else
                         {
@@ -1052,17 +1044,10 @@ namespace MetalSlug3Trainer
                 {
                     try
                     {
-                        byte tempByte = 0;
-                        if (int.TryParse(DisplayByteValue(hProc, bombCountP1AddressGlobal, BASE_ADDRESS_1, OFFSET_P1_BOMB_COUNT), out int currentBombCountP1))
-                        {
-                            tempByte = Convert.ToByte(currentBombCountP1);
-                        }
                         if (int.TryParse(textBoxP2BombCountWrite.Text, out int bombCount)
                             && (bombCount >= 0 && bombCount <= 255))
                         {
                             WriteByte(hProc, bombCountP2AddressGlobal, Convert.ToByte(bombCount));
-                            // Write existing P1 Bomb Count as P2 Bomb Count is the High Byte and overwrites the P1 Bomb Count (Low Byte)
-                            WriteByte(hProc, bombCountP1AddressGlobal, tempByte);
                         }
                         else
                         {
@@ -1191,16 +1176,10 @@ namespace MetalSlug3Trainer
                 {
                     try
                     {
-                        byte tempByte = 0;
-                        if (int.TryParse(DisplayByteValue(hProc, creditsCountP2AddressGlobal, BASE_ADDRESS_2, OFFSET_P2_CREDITS_COUNT), out int currentCreditsCountP2))
-                        {
-                            tempByte = Convert.ToByte(currentCreditsCountP2);
-                        }
                         if (int.TryParse(textBoxP1CreditsCountWrite.Text, out int creditsCount)
                             && (creditsCount >= 0 && creditsCount <= 255))
                         {
                             WriteByte(hProc, creditsCountP1AddressGlobal, Convert.ToByte(creditsCount));
-                            WriteByte(hProc, creditsCountP2AddressGlobal, tempByte);
                         }
                         else
                         {
@@ -1221,17 +1200,10 @@ namespace MetalSlug3Trainer
                 {
                     try
                     {
-                        //byte tempByte = 0;
-                        //if (int.TryParse(DisplayByteValue(hProc, creditsCountP1AddressGlobal, BASE_ADDRESS_1, OFFSET_P1_CREDITS_COUNT), out int currentCreditsCountP1))
-                        //{
-                        //    tempByte = Convert.ToByte(currentCreditsCountP1);
-                        //}
                         if (int.TryParse(textBoxP2CreditsCountWrite.Text, out int creditsCount)
                             && (creditsCount >= 0 && creditsCount <= 255))
                         {
                             WriteByte(hProc, creditsCountP2AddressGlobal, Convert.ToByte(creditsCount));
-                            // Write existing P1 Credits Count as P2 Credits Count is the High Byte and overwrites the P1 Credits Count (Low Byte)
-                            //WriteByte(hProc, creditsCountP1AddressGlobal, tempByte);
                         }
                         else
                         {
@@ -1257,17 +1229,10 @@ namespace MetalSlug3Trainer
                 {
                     try
                     {
-                        uint tempInt = 0;
-                        if (uint.TryParse(DisplayByteValue(hProc, ammoCountP2AddressGlobal, BASE_ADDRESS_2, OFFSET_P2_AMMO_COUNT), out uint currentAmmoCountP2))
-                        {
-                            tempInt = Convert.ToByte(currentAmmoCountP2);
-                        }
-                        if (uint.TryParse(textBoxP1AmmoCountWrite.Text, out uint ammoCount)
+                        if (ushort.TryParse(textBoxP1AmmoCountWrite.Text, out ushort ammoCount)
                             && (ammoCount >= 0 && ammoCount <= 65535))
                         {
                             WriteUInt16(hProc, ammoCountP1AddressGlobal, ammoCount);
-                            // Write existing P2 Ammo Count as P1 Ammo Count is the High Byte and overwrites the P2 Ammo Count (Low Byte)
-                            WriteUInt16(hProc, ammoCountP2AddressGlobal, tempInt);
                         }
                         else
                         {
@@ -1289,7 +1254,7 @@ namespace MetalSlug3Trainer
                     try
                     {
 
-                        if (uint.TryParse(textBoxP2AmmoCountWrite.Text, out uint ammoCount)
+                        if (ushort.TryParse(textBoxP2AmmoCountWrite.Text, out ushort ammoCount)
                             && (ammoCount >= 0 && ammoCount <= 65535))
                         {
                             WriteUInt16(hProc, ammoCountP2AddressGlobal, ammoCount);
@@ -1369,10 +1334,26 @@ namespace MetalSlug3Trainer
 
                 if (checkBoxP1WeaponType.Checked)
                 {
-
+                    
                     try
                     {
                         //string value = ((KeyValuePair<int, string>)comboBoxP1WeaponTypeWrite.SelectedItem).Value;
+
+                        //// if P1 Weapon Type is 0 (pistol), p1 status should be 0, or the pistol bullets will come out of the special weapon, seems ok so might not matter
+                        //// if p1 weapon type is >0, p1 status must be 1 (holding special weapon or it won't allow firing laser weapon, other weapons fire but act slightly different)
+                        //byte key = Convert.ToByte(((KeyValuePair<int, string>)comboBoxP1WeaponTypeWrite.SelectedItem).Key);
+                        //if (key == 0)
+                        //{
+                        //    // write status of holding pistol
+                        //    WriteByte(hProc, currentP1Status, 0);
+                        //}
+                        //else
+                        //{
+                        //    // write status of holding special weapon
+                        //    WriteByte(hProc, currentP1Status, 1);
+                        //}
+
+                        // write weapon type
                         WriteByte(hProc, weaponTypeP1AddressGlobal, Convert.ToByte(((KeyValuePair<int, string>)comboBoxP1WeaponTypeWrite.SelectedItem).Key));
                     }
                     catch (Exception ex)
@@ -1402,18 +1383,22 @@ namespace MetalSlug3Trainer
                 {
                     try
                     {
-                        // 2 bytes hold P1 and P2 weapon types, changing P2 sets P1 to 0, they probably share the same 16-bit value. P1 is the upper byte, P2 is the lower byte
-                        // Get the current P1 weapon type.
-                        byte tempByte = 0;
-                        if (int.TryParse(DisplayByteValue(hProc, weaponTypeP1AddressGlobal, BASE_ADDRESS_1, OFFSET_P1_WEAPON_TYPE), out int currentWeaponTypeP1))
-                        {
-                            tempByte = Convert.ToByte(currentWeaponTypeP1);
-                        }
+                        // if P2 Weapon Type is 0, p2 status needs to be 0
+                        // if p2 weapon type is >0, p2 status must be 1 (holding special weapon or it won't allow firing weapon)
+                        //byte key = Convert.ToByte(((KeyValuePair<int, string>)comboBoxP2WeaponTypeWrite.SelectedItem).Key);
+                        //if (key == 0)
+                        //{
+                        //    // write status of holding pistol
+                        //    WriteByte(hProc, currentP2Status, 0);
+                        //}
+                        //else
+                        //{
+                        //    // write status of holding special weapon
+                        //    WriteByte(hProc, currentP2Status, 1);
+                        //}
 
                         // Write new P2 weapon type
-                        WriteByte(hProc, weaponTypeP2AddressGlobal, Convert.ToByte(((KeyValuePair<int, string>)comboBoxP2WeaponTypeWrite.SelectedItem).Key));
-                        // Write existing P1 Weapon Type as P2 Weapon Type is the High Byte and overwrites the P1 Weapon Type (Low Byte)
-                        WriteByte(hProc, weaponTypeP1AddressGlobal, tempByte);
+                        WriteByte(hProc, weaponTypeP2AddressGlobal, Convert.ToByte(((KeyValuePair<int, string>)comboBoxP2WeaponTypeWrite.SelectedItem).Key));                        
                     }
                     catch (Exception ex)
                     {
@@ -1442,139 +1427,552 @@ namespace MetalSlug3Trainer
 
                 #region Bomb Type
 
-                //if (checkBoxP1BombType.Checked)
-                //{
-                //    try
-                //    {
-                //        WriteByte(hProc, bombTypeP1AddressGlobal, Convert.ToByte(((KeyValuePair<int, string>)comboBoxP1BombTypeWrite.SelectedItem).Key));
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        textBoxLog.AppendText("An error occurred setting Player 1 Bomb Type."
-                //            + Environment.NewLine
-                //            + "Exception: "
-                //            + ex);
-                //    }
-                //}
-                //if (int.TryParse(DisplayByteValue(hProc, bombTypeP1AddressGlobal, BASE_ADDRESS_1, OFFSET_P1_BOMB_TYPE), out int bombTypeP1))
-                //{
-                //    try
-                //    {
-                //        comboBoxP1BombTypeRead.SelectedIndex = bombTypeP1;
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        textBoxLog.AppendText("An error occurred getting Player 1 Bomb Type."
-                //            + Environment.NewLine
-                //            + "Exception: "
-                //            + ex);
-                //    }
-                //}
+                if (checkBoxP1BombType.Checked)
+                {
+                    try
+                    {
+                        WriteByte(hProc, bombTypeP1AddressGlobal, Convert.ToByte(((KeyValuePair<int, string>)comboBoxP1BombTypeWrite.SelectedItem).Key));
+                    }
+                    catch (Exception ex)
+                    {
+                        textBoxLog.AppendText("An error occurred setting Player 1 Bomb Type."
+                            + Environment.NewLine
+                            + "Exception: "
+                            + ex);
+                    }
+                }
+                if (int.TryParse(DisplayByteValue(hProc, bombTypeP1AddressGlobal, BASE_ADDRESS_1, OFFSET_P1_BOMB_TYPE), out int bombTypeP1))
+                {
+                    try
+                    {
+                        comboBoxP1BombTypeRead.SelectedIndex = bombTypeP1;
+                    }
+                    catch (Exception ex)
+                    {
+                        textBoxLog.AppendText("An error occurred getting Player 1 Bomb Type."
+                            + Environment.NewLine
+                            + "Exception: "
+                            + ex);
+                    }
+                }
 
-                //if (checkBoxP2BombType.Checked)
-                //{
-                //    try
-                //    {
-                //        byte tempByte = 0;
-                //        if (int.TryParse(DisplayByteValue(hProc, bombTypeP1AddressGlobal, BASE_ADDRESS_1, OFFSET_P1_BOMB_TYPE), out int currentBombTypeP1))
-                //        {
-                //            tempByte = Convert.ToByte(currentBombTypeP1);
-                //        }
-                //        WriteByte(hProc, bombTypeP2AddressGlobal, Convert.ToByte(((KeyValuePair<int, string>)comboBoxP2BombTypeWrite.SelectedItem).Key));
-                //        // Write existing P1 Bomb Type as P2 Bomb Type is the High Byte and overwrites the P1 Bomb Type (Low Byte)
-                //        WriteByte(hProc, bombTypeP1AddressGlobal, tempByte);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        textBoxLog.AppendText("An error occurred setting Player 2 Bomb Type."
-                //            + Environment.NewLine
-                //            + "Exception: "
-                //            + ex);
-                //    }
-                //}
-                //if (int.TryParse(DisplayByteValue(hProc, bombTypeP2AddressGlobal, BASE_ADDRESS_2, OFFSET_P2_BOMB_TYPE), out int bombTypeP2))
-                //{
-                //    try
-                //    {
-                //        comboBoxP2BombTypeRead.SelectedIndex = bombTypeP2;
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        textBoxLog.AppendText("An error occurred getting Player 2 Bomb Type."
-                //            + Environment.NewLine
-                //            + "Exception: "
-                //            + ex);
-                //    }
-                //}
+                if (checkBoxP2BombType.Checked)
+                {
+                    try
+                    {
+                        WriteByte(hProc, bombTypeP2AddressGlobal, Convert.ToByte(((KeyValuePair<int, string>)comboBoxP2BombTypeWrite.SelectedItem).Key));
+                    }
+                    catch (Exception ex)
+                    {
+                        textBoxLog.AppendText("An error occurred setting Player 2 Bomb Type."
+                            + Environment.NewLine
+                            + "Exception: "
+                            + ex);
+                    }
+                }
+                if (int.TryParse(DisplayByteValue(hProc, bombTypeP2AddressGlobal, BASE_ADDRESS_2, OFFSET_P2_BOMB_TYPE), out int bombTypeP2))
+                {
+                    try
+                    {
+                        comboBoxP2BombTypeRead.SelectedIndex = bombTypeP2;
+                    }
+                    catch (Exception ex)
+                    {
+                        textBoxLog.AppendText("An error occurred getting Player 2 Bomb Type."
+                            + Environment.NewLine
+                            + "Exception: "
+                            + ex);
+                    }
+                }
 
                 #endregion
 
-                #region Current Character
+                #region Status
 
-                //if (checkBoxP1CurrentCharacter.Checked)
-                //{
-                //    try
-                //    {
-                //        WriteByte(hProc, currentCharacterP1AddressGlobal, Convert.ToByte(((KeyValuePair<int, string>)comboBoxP1CurrentCharacterWrite.SelectedItem).Key));
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        textBoxLog.AppendText("An error occurred setting Player 1 Current Character."
-                //            + Environment.NewLine
-                //            + "Exception: "
-                //            + ex);
-                //    }
-                //}
-                //if (int.TryParse(DisplayByteValue(hProc, currentCharacterP1AddressGlobal, BASE_ADDRESS_1, OFFSET_P1_CURRENT_CHARACTER), out int currentCharacterP1))
-                //{
-                //    try
-                //    {
-                //        comboBoxP1CurrentCharacterRead.SelectedIndex = currentCharacterP1;
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        textBoxLog.AppendText("An error occurred getting Player 1 Current Character."
-                //            + Environment.NewLine
-                //            + "Exception: "
-                //            + ex);
-                //    }
-                //}
+                if (checkBoxP1Status.Checked)
+                {
+                    try
+                    {
+                        WriteByte(hProc, currentP1Status, Convert.ToByte(((KeyValuePair<int, string>)comboBoxP1StatusWrite.SelectedItem).Key));
+                    }
+                    catch (Exception ex)
+                    {
+                        textBoxLog.AppendText("An error occurred setting Player 1 Status."
+                            + Environment.NewLine
+                            + "Exception: "
+                            + ex);
+                    }
+                }
+                if (int.TryParse(DisplayByteValue(hProc, currentP1Status, BASE_ADDRESS_1, OFFSET_P1_STATUS), out int currentP1StatusInt))
+                {
+                    try
+                    {
+                        comboBoxP1StatusRead.SelectedIndex = currentP1StatusInt;
+                    }
+                    catch (Exception ex)
+                    {
+                        textBoxLog.AppendText("An error occurred getting Player 1 Status."
+                            + Environment.NewLine
+                            + "Exception: "
+                            + ex);
+                    }
+                }
 
-                //if (checkBoxP2CurrentCharacter.Checked)
-                //{
-                //    try
-                //    {
-                //        WriteByte(hProc, currentCharacterP2AddressGlobal, Convert.ToByte(((KeyValuePair<int, string>)comboBoxP2CurrentCharacterWrite.SelectedItem).Key));
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        textBoxLog.AppendText("An error occurred setting Player 2 Current Character."
-                //            + Environment.NewLine
-                //            + "Exception: "
-                //            + ex);
-                //    }
-                //}
-                //if (int.TryParse(DisplayByteValue(hProc, currentCharacterP2AddressGlobal, BASE_ADDRESS_2, OFFSET_P2_CURRENT_CHARACTER), out int currentCharacterP2))
-                //{
-                //    try
-                //    {
-                //        comboBoxP2CurrentCharacterRead.SelectedIndex = currentCharacterP2;
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        textBoxLog.AppendText("An error occurred getting Player 2 Current Character."
-                //            + Environment.NewLine
-                //            + "Exception: "
-                //            + ex);
-                //    }
-                //}
+                if (checkBoxP2Status.Checked)
+                {
+                    try
+                    {
+                        WriteByte(hProc, currentP2Status, Convert.ToByte(((KeyValuePair<int, string>)comboBoxP2StatusWrite.SelectedItem).Key));
+                    }
+                    catch (Exception ex)
+                    {
+                        textBoxLog.AppendText("An error occurred setting Player 2 Status."
+                            + Environment.NewLine
+                            + "Exception: "
+                            + ex);
+                    }
+                }
+                if (int.TryParse(DisplayByteValue(hProc, currentP2Status, BASE_ADDRESS_2, OFFSET_P2_STATUS), out int currentP2StatusInt))
+                {
+                    try
+                    {
+                        comboBoxP2StatusRead.SelectedIndex = currentP2StatusInt;
+                    }
+                    catch (Exception ex)
+                    {
+                        textBoxLog.AppendText("An error occurred getting Player 2 Status."
+                            + Environment.NewLine
+                            + "Exception: "
+                            + ex);
+                    }
+                }
 
                 #endregion
 
             }
         }
 
+        #region Mission Complete
+
+        private void ButtonMissionCommplete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                WriteByte(hProc, missionCompleteAddressGlobal, 255);
+            }
+            catch (Exception ex)
+            {
+                textBoxLog.AppendText("An error occurred setting Mission Complete."
+                    + Environment.NewLine
+                    + "Exception: "
+                    + ex);
+            }
+        }
+
+
         #endregion
 
+        #region Level Select
+
+        private void ButtonLevelSelect_Click(object sender, EventArgs e)
+        {
+            byte eD7A;
+            byte eD7B;
+
+            switch (comboBoxLevelSelect.SelectedIndex)
+            {
+                case 0:
+                    eD7A = 0;
+                    eD7B = 0;
+                    break;
+                case 1:
+                    eD7A = 1;
+                    eD7B = 0;
+                    break;
+                case 2:
+                    eD7A = 2;
+                    eD7B = 0;
+                    break;
+                case 3:
+                    eD7A = 3;
+                    eD7B = 0;
+                    break;
+                case 4:
+                    eD7A = 4;
+                    eD7B = 0;
+                    break;
+                case 5:
+                    eD7A = 5;
+                    eD7B = 0;
+                    break;
+                case 6:
+                    eD7A = 6;
+                    eD7B = 0;
+                    break;
+                case 7:
+                    eD7A = 0;
+                    eD7B = 1;
+                    break;
+                case 8:
+                    eD7A = 1;
+                    eD7B = 1;
+                    break;
+                case 9:
+                    eD7A = 2;
+                    eD7B = 1;
+                    break;
+                case 10:
+                    eD7A = 3;
+                    eD7B = 1;
+                    break;
+                case 11:
+                    eD7A = 4;
+                    eD7B = 1;
+                    break;
+                case 12:
+                    eD7A = 5;
+                    eD7B = 1;
+                    break;
+                case 13:
+                    eD7A = 6;
+                    eD7B = 1;
+                    break;
+                case 14:
+                    eD7A = 7;
+                    eD7B = 1;
+                    break;
+                case 15:
+                    eD7A = 0;
+                    eD7B = 2;
+                    break;
+                case 16:
+                    eD7A = 1;
+                    eD7B = 2;
+                    break;
+                case 17:
+                    eD7A = 2;
+                    eD7B = 2;
+                    break;
+                case 18:
+                    eD7A = 3;
+                    eD7B = 2;
+                    break;
+                case 19:
+                    eD7A = 4;
+                    eD7B = 2;
+                    break;
+                case 20:
+                    eD7A = 5;
+                    eD7B = 2;
+                    break;
+                case 21:
+                    eD7A = 6;
+                    eD7B = 2;
+                    break;
+                case 22:
+                    eD7A = 0;
+                    eD7B = 3;
+                    break;
+                case 23:
+                    eD7A = 1;
+                    eD7B = 3;
+                    break;
+                case 24:
+                    eD7A = 2;
+                    eD7B = 3;
+                    break;
+                case 25:
+                    eD7A = 3;
+                    eD7B = 3;
+                    break;
+                case 26:
+                    eD7A = 4;
+                    eD7B = 3;
+                    break;
+                case 27:
+                    eD7A = 5;
+                    eD7B = 3;
+                    break;
+                case 28:
+                    eD7A = 6;
+                    eD7B = 3;
+                    break;
+                case 29:
+                    eD7A = 7;
+                    eD7B = 3;
+                    break;
+                case 30:
+                    eD7A = 8;
+                    eD7B = 3;
+                    break;
+                case 31:
+                    eD7A = 9;
+                    eD7B = 3;
+                    break;
+                case 32:
+                    eD7A = 10;
+                    eD7B = 3;
+                    break;
+                case 33:
+                    eD7A = 11;
+                    eD7B = 3;
+                    break;
+                case 34:
+                    eD7A = 12;
+                    eD7B = 3;
+                    break;
+                case 35:
+                    eD7A = 13;
+                    eD7B = 3;
+                    break;
+                case 36:
+                    eD7A = 14;
+                    eD7B = 3;
+                    break;
+                case 37:
+                    eD7A = 15;
+                    eD7B = 3;
+                    break;
+                case 38:
+                    eD7A = 16;
+                    eD7B = 3;
+                    break;
+                case 39:
+                    eD7A = 17;
+                    eD7B = 3;
+                    break;
+                case 40:
+                    eD7A = 0;
+                    eD7B = 4;
+                    break;
+                case 41:
+                    eD7A = 1;
+                    eD7B = 4;
+                    break;
+                case 42:
+                    eD7A = 2;
+                    eD7B = 4;
+                    break;
+                case 43:
+                    eD7A = 3;
+                    eD7B = 4;
+                    break;
+                case 44:
+                    eD7A = 4;
+                    eD7B = 4;
+                    break;
+                case 45:
+                    eD7A = 5;
+                    eD7B = 4;
+                    break;
+                case 46:
+                    eD7A = 6;
+                    eD7B = 4;
+                    break;
+                case 47:
+                    eD7A = 7;
+                    eD7B = 4;
+                    break;
+                case 48:
+                    eD7A = 8;
+                    eD7B = 4;
+                    break;
+                case 49:
+                    eD7A = 9;
+                    eD7B = 4;
+                    break;
+                case 50:
+                    eD7A = 10;
+                    eD7B = 4;
+                    break;
+                case 51:
+                    eD7A = 11;
+                    eD7B = 4;
+                    break;
+                case 52:
+                    eD7A = 12;
+                    eD7B = 4;
+                    break;
+                case 53:
+                    eD7A = 13;
+                    eD7B = 4;
+                    break;
+                case 54:
+                    eD7A = 14;
+                    eD7B = 4;
+                    break;
+                case 55:
+                    eD7A = 0;
+                    eD7B = 5;
+                    break;
+                case 56:
+                    eD7A = 1;
+                    eD7B = 5;
+                    break;
+                case 57:
+                    eD7A = 2;
+                    eD7B = 5;
+                    break;
+                case 58:
+                    eD7A = 3;
+                    eD7B = 5;
+                    break;
+                case 59:
+                    eD7A = 4;
+                    eD7B = 5;
+                    break;
+                case 60:
+                    eD7A = 0;
+                    eD7B = 6;
+                    break;
+                case 61:
+                    eD7A = 1;
+                    eD7B = 6;
+                    break;
+                case 62:
+                    eD7A = 2;
+                    eD7B = 6;
+                    break;
+                case 63:
+                    eD7A = 0;
+                    eD7B = 7;
+                    break;
+                case 64:
+                    eD7A = 1;
+                    eD7B = 7;
+                    break;
+                case 65:
+                    eD7A = 2;
+                    eD7B = 7;
+                    break;
+                case 66:
+                    eD7A = 0;
+                    eD7B = 8;
+                    break;
+                case 67:
+                    eD7A = 0;
+                    eD7B = 9;
+                    break;
+                case 68:
+                    eD7A = 0;
+                    eD7B = 10;
+                    break;
+                case 69:
+                    eD7A = 0;
+                    eD7B = 11;
+                    break;
+                case 70:
+                    eD7A = 0;
+                    eD7B = 12;
+                    break;
+                case 71:
+                    eD7A = 0;
+                    eD7B = 13;
+                    break;
+                case 72:
+                    eD7A = 0;
+                    eD7B = 14;
+                    break;
+                case 73:
+                    eD7A = 0;
+                    eD7B = 15;
+                    break;
+                case 74:
+                    eD7A = 0;
+                    eD7B = 16;
+                    break;
+                case 75:
+                    eD7A = 0;
+                    eD7B = 17;
+                    break;
+                case 76:
+                    eD7A = 0;
+                    eD7B = 18;
+                    break;
+                default:
+                    eD7A = 0;
+                    eD7B = 0;
+                    break;
+            }
+
+            try
+            {
+                WriteByte(hProc, levelSelect1AddressGlobal, eD7A);
+                WriteByte(hProc, levelSelect2AddressGlobal, eD7B);
+            }
+            catch (Exception ex)
+            {
+                textBoxLog.AppendText("An error occurred setting Level Select."
+                    + Environment.NewLine
+                    + "Exception: "
+                    + ex);
+            }
+        }
+
+        #endregion
+
+        #region Debug Flags
+
+        public void SetDebug1Flags(object sender, EventArgs e)
+        {
+            BitArray bitArray = new BitArray(8);
+            byte[] debug1Bytes = new byte[1];
+
+            bitArray[0] = true ? checkBoxBit0.Checked : false;
+            bitArray[1] = true ? checkBoxBit1.Checked : false;
+            bitArray[2] = true ? checkBoxBit2.Checked : false;
+            bitArray[3] = true ? checkBoxBit3.Checked : false;
+            bitArray[4] = true ? checkBoxBit4.Checked : false;
+            bitArray[5] = true ? checkBoxBit5.Checked : false;
+            bitArray[6] = true ? checkBoxBit6.Checked : false;
+            bitArray[7] = true ? checkBoxBit7.Checked : false;
+
+            bitArray.CopyTo(debug1Bytes, 0);
+
+            try
+            {
+                WriteByte(hProc, debug1AddressGlobal, debug1Bytes[0]);
+            }
+            catch (Exception ex)
+            {
+                textBoxLog.AppendText("An error occurred setting Debug 1."
+                    + Environment.NewLine
+                    + "Exception: "
+                    + ex);
+            }
+        }
+
+        public void SetDebug2Flags(object sender, EventArgs e)
+        {
+            BitArray bitArray = new BitArray(8);
+            byte[] debug2Bytes = new byte[1];
+
+            bitArray[0] = true ? checkBoxBit8.Checked : false;
+            bitArray[1] = true ? checkBoxBit9.Checked : false;
+            bitArray[2] = true ? checkBoxBit10.Checked : false;
+            bitArray[3] = true ? checkBoxBit11.Checked : false;
+            bitArray[4] = true ? checkBoxBit12.Checked : false;
+            bitArray[5] = true ? checkBoxBit13.Checked : false;
+            bitArray[6] = true ? checkBoxBit14.Checked : false;
+            bitArray[7] = true ? checkBoxBit15.Checked : false;
+
+            bitArray.CopyTo(debug2Bytes, 0);
+
+            try
+            {
+                WriteByte(hProc, debug2AddressGlobal, debug2Bytes[0]);
+            }
+            catch (Exception ex)
+            {
+                textBoxLog.AppendText("An error occurred setting Debug 2."
+                    + Environment.NewLine
+                    + "Exception: "
+                    + ex);
+            }
+        }
+
+        #endregion
+
+        #endregion
     }
 }

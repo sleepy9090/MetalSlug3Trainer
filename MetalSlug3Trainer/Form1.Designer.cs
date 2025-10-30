@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBoxOverride = new System.Windows.Forms.GroupBox();
             this.checkBoxModuleName = new System.Windows.Forms.CheckBox();
             this.checkBoxProcessName = new System.Windows.Forms.CheckBox();
@@ -45,7 +47,7 @@
             this.comboBoxP2Score1 = new System.Windows.Forms.ComboBox();
             this.comboBoxP2BombTypeWrite = new System.Windows.Forms.ComboBox();
             this.comboBoxP2WeaponTypeWrite = new System.Windows.Forms.ComboBox();
-            this.comboBoxP2CurrentCharacterWrite = new System.Windows.Forms.ComboBox();
+            this.comboBoxP2StatusWrite = new System.Windows.Forms.ComboBox();
             this.textBoxP2CreditsCountWrite = new System.Windows.Forms.TextBox();
             this.textBoxP2VehicleHealthCountWrite = new System.Windows.Forms.TextBox();
             this.textBoxP2VehicleAmmoCountWrite = new System.Windows.Forms.TextBox();
@@ -64,7 +66,7 @@
             this.textBoxP2BombCountRead = new System.Windows.Forms.TextBox();
             this.textBoxP2ScoreRead = new System.Windows.Forms.TextBox();
             this.checkBoxP2Score = new System.Windows.Forms.CheckBox();
-            this.checkBoxP2CurrentCharacter = new System.Windows.Forms.CheckBox();
+            this.checkBoxP2Status = new System.Windows.Forms.CheckBox();
             this.checkBoxP2CreditsCount = new System.Windows.Forms.CheckBox();
             this.checkBoxP2VehicleHealthCount = new System.Windows.Forms.CheckBox();
             this.checkBoxP2VehicleAmmoCount = new System.Windows.Forms.CheckBox();
@@ -76,7 +78,7 @@
             this.checkBoxP2InvincibilityTimer = new System.Windows.Forms.CheckBox();
             this.checkBoxP2LivesCount = new System.Windows.Forms.CheckBox();
             this.labelP2Score = new System.Windows.Forms.Label();
-            this.labelP2CurrentCharacter = new System.Windows.Forms.Label();
+            this.labelP2Status = new System.Windows.Forms.Label();
             this.labelP2CreditsCount = new System.Windows.Forms.Label();
             this.labelP2VehicleHealthCount = new System.Windows.Forms.Label();
             this.labelP2VehicleAmmoCount = new System.Windows.Forms.Label();
@@ -87,7 +89,7 @@
             this.labelP2POWsRescued = new System.Windows.Forms.Label();
             this.labelP2InvincibilityTimer = new System.Windows.Forms.Label();
             this.labelP2LivesCount = new System.Windows.Forms.Label();
-            this.comboBoxP2CurrentCharacterRead = new System.Windows.Forms.ComboBox();
+            this.comboBoxP2StatusRead = new System.Windows.Forms.ComboBox();
             this.comboBoxP2BombTypeRead = new System.Windows.Forms.ComboBox();
             this.comboBoxP2WeaponTypeRead = new System.Windows.Forms.ComboBox();
             this.groupBoxPlayer1 = new System.Windows.Forms.GroupBox();
@@ -97,7 +99,7 @@
             this.comboBoxP1Score1 = new System.Windows.Forms.ComboBox();
             this.comboBoxP1BombTypeWrite = new System.Windows.Forms.ComboBox();
             this.comboBoxP1WeaponTypeWrite = new System.Windows.Forms.ComboBox();
-            this.comboBoxP1CurrentCharacterWrite = new System.Windows.Forms.ComboBox();
+            this.comboBoxP1StatusWrite = new System.Windows.Forms.ComboBox();
             this.textBoxP1CreditsCountWrite = new System.Windows.Forms.TextBox();
             this.textBoxP1VehicleHealthCountWrite = new System.Windows.Forms.TextBox();
             this.textBoxP1VehicleAmmoCountWrite = new System.Windows.Forms.TextBox();
@@ -116,7 +118,7 @@
             this.textBoxP1LivesCountWrite = new System.Windows.Forms.TextBox();
             this.textBoxP1ScoreRead = new System.Windows.Forms.TextBox();
             this.checkBoxP1Score = new System.Windows.Forms.CheckBox();
-            this.checkBoxP1CurrentCharacter = new System.Windows.Forms.CheckBox();
+            this.checkBoxP1Status = new System.Windows.Forms.CheckBox();
             this.checkBoxP1CreditsCount = new System.Windows.Forms.CheckBox();
             this.checkBoxP1VehicleHealthCount = new System.Windows.Forms.CheckBox();
             this.checkBoxP1VehicleAmmoCount = new System.Windows.Forms.CheckBox();
@@ -128,7 +130,7 @@
             this.checkBoxP1InvincibilityTimer = new System.Windows.Forms.CheckBox();
             this.checkBoxP1LivesCount = new System.Windows.Forms.CheckBox();
             this.labelP1Score = new System.Windows.Forms.Label();
-            this.labelP1CurrentCharacter = new System.Windows.Forms.Label();
+            this.labelP1Status = new System.Windows.Forms.Label();
             this.labelP1CreditsCount = new System.Windows.Forms.Label();
             this.labelP1VehicleHealthCount = new System.Windows.Forms.Label();
             this.labelP1VehicleAmmoCount = new System.Windows.Forms.Label();
@@ -139,10 +141,11 @@
             this.labelP1POWsRescued = new System.Windows.Forms.Label();
             this.labelP1InvincibilityTimer = new System.Windows.Forms.Label();
             this.labelP1LivesCount = new System.Windows.Forms.Label();
-            this.comboBoxP1CurrentCharacterRead = new System.Windows.Forms.ComboBox();
+            this.comboBoxP1StatusRead = new System.Windows.Forms.ComboBox();
             this.comboBoxP1BombTypeRead = new System.Windows.Forms.ComboBox();
             this.comboBoxP1WeaponTypeRead = new System.Windows.Forms.ComboBox();
             this.groupBoxGlobal = new System.Windows.Forms.GroupBox();
+            this.buttonMissionCommplete = new System.Windows.Forms.Button();
             this.textBoxContinueTimerWrite = new System.Windows.Forms.TextBox();
             this.textBoxLevelTimerWrite = new System.Windows.Forms.TextBox();
             this.textBoxContinueTimerRead = new System.Windows.Forms.TextBox();
@@ -151,12 +154,34 @@
             this.checkBoxLevelTimer = new System.Windows.Forms.CheckBox();
             this.labelContinueTimer = new System.Windows.Forms.Label();
             this.labelLevelTimer = new System.Windows.Forms.Label();
+            this.groupBoxDebug = new System.Windows.Forms.GroupBox();
+            this.checkBoxBit15 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit14 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit13 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit12 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit11 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit10 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit9 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit8 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit7 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit6 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit5 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit4 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit3 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit2 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit1 = new System.Windows.Forms.CheckBox();
+            this.checkBoxBit0 = new System.Windows.Forms.CheckBox();
+            this.buttonLevelSelect = new System.Windows.Forms.Button();
+            this.labelLevelSelect = new System.Windows.Forms.Label();
+            this.comboBoxLevelSelect = new System.Windows.Forms.ComboBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxOverride.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBoxLog.SuspendLayout();
             this.groupBoxPlayer2.SuspendLayout();
             this.groupBoxPlayer1.SuspendLayout();
             this.groupBoxGlobal.SuspendLayout();
+            this.groupBoxDebug.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxOverride
@@ -226,6 +251,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(268, 471);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(250, 78);
@@ -236,9 +262,9 @@
             // groupBoxLog
             // 
             this.groupBoxLog.Controls.Add(this.textBoxLog);
-            this.groupBoxLog.Location = new System.Drawing.Point(12, 100);
+            this.groupBoxLog.Location = new System.Drawing.Point(12, 405);
             this.groupBoxLog.Name = "groupBoxLog";
-            this.groupBoxLog.Size = new System.Drawing.Size(250, 449);
+            this.groupBoxLog.Size = new System.Drawing.Size(250, 144);
             this.groupBoxLog.TabIndex = 9;
             this.groupBoxLog.TabStop = false;
             this.groupBoxLog.Text = "Log";
@@ -249,7 +275,7 @@
             this.textBoxLog.Multiline = true;
             this.textBoxLog.Name = "textBoxLog";
             this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxLog.Size = new System.Drawing.Size(235, 424);
+            this.textBoxLog.Size = new System.Drawing.Size(235, 119);
             this.textBoxLog.TabIndex = 0;
             // 
             // groupBoxPlayer2
@@ -260,7 +286,7 @@
             this.groupBoxPlayer2.Controls.Add(this.comboBoxP2Score1);
             this.groupBoxPlayer2.Controls.Add(this.comboBoxP2BombTypeWrite);
             this.groupBoxPlayer2.Controls.Add(this.comboBoxP2WeaponTypeWrite);
-            this.groupBoxPlayer2.Controls.Add(this.comboBoxP2CurrentCharacterWrite);
+            this.groupBoxPlayer2.Controls.Add(this.comboBoxP2StatusWrite);
             this.groupBoxPlayer2.Controls.Add(this.textBoxP2CreditsCountWrite);
             this.groupBoxPlayer2.Controls.Add(this.textBoxP2VehicleHealthCountWrite);
             this.groupBoxPlayer2.Controls.Add(this.textBoxP2VehicleAmmoCountWrite);
@@ -279,7 +305,7 @@
             this.groupBoxPlayer2.Controls.Add(this.textBoxP2BombCountRead);
             this.groupBoxPlayer2.Controls.Add(this.textBoxP2ScoreRead);
             this.groupBoxPlayer2.Controls.Add(this.checkBoxP2Score);
-            this.groupBoxPlayer2.Controls.Add(this.checkBoxP2CurrentCharacter);
+            this.groupBoxPlayer2.Controls.Add(this.checkBoxP2Status);
             this.groupBoxPlayer2.Controls.Add(this.checkBoxP2CreditsCount);
             this.groupBoxPlayer2.Controls.Add(this.checkBoxP2VehicleHealthCount);
             this.groupBoxPlayer2.Controls.Add(this.checkBoxP2VehicleAmmoCount);
@@ -291,7 +317,7 @@
             this.groupBoxPlayer2.Controls.Add(this.checkBoxP2InvincibilityTimer);
             this.groupBoxPlayer2.Controls.Add(this.checkBoxP2LivesCount);
             this.groupBoxPlayer2.Controls.Add(this.labelP2Score);
-            this.groupBoxPlayer2.Controls.Add(this.labelP2CurrentCharacter);
+            this.groupBoxPlayer2.Controls.Add(this.labelP2Status);
             this.groupBoxPlayer2.Controls.Add(this.labelP2CreditsCount);
             this.groupBoxPlayer2.Controls.Add(this.labelP2VehicleHealthCount);
             this.groupBoxPlayer2.Controls.Add(this.labelP2VehicleAmmoCount);
@@ -302,7 +328,7 @@
             this.groupBoxPlayer2.Controls.Add(this.labelP2POWsRescued);
             this.groupBoxPlayer2.Controls.Add(this.labelP2InvincibilityTimer);
             this.groupBoxPlayer2.Controls.Add(this.labelP2LivesCount);
-            this.groupBoxPlayer2.Controls.Add(this.comboBoxP2CurrentCharacterRead);
+            this.groupBoxPlayer2.Controls.Add(this.comboBoxP2StatusRead);
             this.groupBoxPlayer2.Controls.Add(this.comboBoxP2BombTypeRead);
             this.groupBoxPlayer2.Controls.Add(this.comboBoxP2WeaponTypeRead);
             this.groupBoxPlayer2.Location = new System.Drawing.Point(524, 12);
@@ -360,13 +386,13 @@
             this.comboBoxP2WeaponTypeWrite.Size = new System.Drawing.Size(121, 21);
             this.comboBoxP2WeaponTypeWrite.TabIndex = 79;
             // 
-            // comboBoxP2CurrentCharacterWrite
+            // comboBoxP2StatusWrite
             // 
-            this.comboBoxP2CurrentCharacterWrite.FormattingEnabled = true;
-            this.comboBoxP2CurrentCharacterWrite.Location = new System.Drawing.Point(102, 312);
-            this.comboBoxP2CurrentCharacterWrite.Name = "comboBoxP2CurrentCharacterWrite";
-            this.comboBoxP2CurrentCharacterWrite.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxP2CurrentCharacterWrite.TabIndex = 78;
+            this.comboBoxP2StatusWrite.FormattingEnabled = true;
+            this.comboBoxP2StatusWrite.Location = new System.Drawing.Point(102, 312);
+            this.comboBoxP2StatusWrite.Name = "comboBoxP2StatusWrite";
+            this.comboBoxP2StatusWrite.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxP2StatusWrite.TabIndex = 78;
             // 
             // textBoxP2CreditsCountWrite
             // 
@@ -496,14 +522,14 @@
             this.checkBoxP2Score.TabIndex = 59;
             this.checkBoxP2Score.UseVisualStyleBackColor = true;
             // 
-            // checkBoxP2CurrentCharacter
+            // checkBoxP2Status
             // 
-            this.checkBoxP2CurrentCharacter.AutoSize = true;
-            this.checkBoxP2CurrentCharacter.Location = new System.Drawing.Point(229, 315);
-            this.checkBoxP2CurrentCharacter.Name = "checkBoxP2CurrentCharacter";
-            this.checkBoxP2CurrentCharacter.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxP2CurrentCharacter.TabIndex = 58;
-            this.checkBoxP2CurrentCharacter.UseVisualStyleBackColor = true;
+            this.checkBoxP2Status.AutoSize = true;
+            this.checkBoxP2Status.Location = new System.Drawing.Point(229, 315);
+            this.checkBoxP2Status.Name = "checkBoxP2Status";
+            this.checkBoxP2Status.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxP2Status.TabIndex = 58;
+            this.checkBoxP2Status.UseVisualStyleBackColor = true;
             // 
             // checkBoxP2CreditsCount
             // 
@@ -604,14 +630,14 @@
             this.labelP2Score.TabIndex = 47;
             this.labelP2Score.Text = "Score:";
             // 
-            // labelP2CurrentCharacter
+            // labelP2Status
             // 
-            this.labelP2CurrentCharacter.AutoSize = true;
-            this.labelP2CurrentCharacter.Location = new System.Drawing.Point(6, 288);
-            this.labelP2CurrentCharacter.Name = "labelP2CurrentCharacter";
-            this.labelP2CurrentCharacter.Size = new System.Drawing.Size(93, 13);
-            this.labelP2CurrentCharacter.TabIndex = 46;
-            this.labelP2CurrentCharacter.Text = "Current Character:";
+            this.labelP2Status.AutoSize = true;
+            this.labelP2Status.Location = new System.Drawing.Point(6, 288);
+            this.labelP2Status.Name = "labelP2Status";
+            this.labelP2Status.Size = new System.Drawing.Size(40, 13);
+            this.labelP2Status.TabIndex = 46;
+            this.labelP2Status.Text = "Status:";
             // 
             // labelP2CreditsCount
             // 
@@ -703,13 +729,13 @@
             this.labelP2LivesCount.TabIndex = 36;
             this.labelP2LivesCount.Text = "Lives Count:";
             // 
-            // comboBoxP2CurrentCharacterRead
+            // comboBoxP2StatusRead
             // 
-            this.comboBoxP2CurrentCharacterRead.FormattingEnabled = true;
-            this.comboBoxP2CurrentCharacterRead.Location = new System.Drawing.Point(102, 285);
-            this.comboBoxP2CurrentCharacterRead.Name = "comboBoxP2CurrentCharacterRead";
-            this.comboBoxP2CurrentCharacterRead.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxP2CurrentCharacterRead.TabIndex = 34;
+            this.comboBoxP2StatusRead.FormattingEnabled = true;
+            this.comboBoxP2StatusRead.Location = new System.Drawing.Point(102, 285);
+            this.comboBoxP2StatusRead.Name = "comboBoxP2StatusRead";
+            this.comboBoxP2StatusRead.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxP2StatusRead.TabIndex = 34;
             // 
             // comboBoxP2BombTypeRead
             // 
@@ -735,7 +761,7 @@
             this.groupBoxPlayer1.Controls.Add(this.comboBoxP1Score1);
             this.groupBoxPlayer1.Controls.Add(this.comboBoxP1BombTypeWrite);
             this.groupBoxPlayer1.Controls.Add(this.comboBoxP1WeaponTypeWrite);
-            this.groupBoxPlayer1.Controls.Add(this.comboBoxP1CurrentCharacterWrite);
+            this.groupBoxPlayer1.Controls.Add(this.comboBoxP1StatusWrite);
             this.groupBoxPlayer1.Controls.Add(this.textBoxP1CreditsCountWrite);
             this.groupBoxPlayer1.Controls.Add(this.textBoxP1VehicleHealthCountWrite);
             this.groupBoxPlayer1.Controls.Add(this.textBoxP1VehicleAmmoCountWrite);
@@ -754,7 +780,7 @@
             this.groupBoxPlayer1.Controls.Add(this.textBoxP1LivesCountWrite);
             this.groupBoxPlayer1.Controls.Add(this.textBoxP1ScoreRead);
             this.groupBoxPlayer1.Controls.Add(this.checkBoxP1Score);
-            this.groupBoxPlayer1.Controls.Add(this.checkBoxP1CurrentCharacter);
+            this.groupBoxPlayer1.Controls.Add(this.checkBoxP1Status);
             this.groupBoxPlayer1.Controls.Add(this.checkBoxP1CreditsCount);
             this.groupBoxPlayer1.Controls.Add(this.checkBoxP1VehicleHealthCount);
             this.groupBoxPlayer1.Controls.Add(this.checkBoxP1VehicleAmmoCount);
@@ -766,7 +792,7 @@
             this.groupBoxPlayer1.Controls.Add(this.checkBoxP1InvincibilityTimer);
             this.groupBoxPlayer1.Controls.Add(this.checkBoxP1LivesCount);
             this.groupBoxPlayer1.Controls.Add(this.labelP1Score);
-            this.groupBoxPlayer1.Controls.Add(this.labelP1CurrentCharacter);
+            this.groupBoxPlayer1.Controls.Add(this.labelP1Status);
             this.groupBoxPlayer1.Controls.Add(this.labelP1CreditsCount);
             this.groupBoxPlayer1.Controls.Add(this.labelP1VehicleHealthCount);
             this.groupBoxPlayer1.Controls.Add(this.labelP1VehicleAmmoCount);
@@ -777,7 +803,7 @@
             this.groupBoxPlayer1.Controls.Add(this.labelP1POWsRescued);
             this.groupBoxPlayer1.Controls.Add(this.labelP1InvincibilityTimer);
             this.groupBoxPlayer1.Controls.Add(this.labelP1LivesCount);
-            this.groupBoxPlayer1.Controls.Add(this.comboBoxP1CurrentCharacterRead);
+            this.groupBoxPlayer1.Controls.Add(this.comboBoxP1StatusRead);
             this.groupBoxPlayer1.Controls.Add(this.comboBoxP1BombTypeRead);
             this.groupBoxPlayer1.Controls.Add(this.comboBoxP1WeaponTypeRead);
             this.groupBoxPlayer1.Location = new System.Drawing.Point(268, 12);
@@ -835,13 +861,13 @@
             this.comboBoxP1WeaponTypeWrite.Size = new System.Drawing.Size(121, 21);
             this.comboBoxP1WeaponTypeWrite.TabIndex = 63;
             // 
-            // comboBoxP1CurrentCharacterWrite
+            // comboBoxP1StatusWrite
             // 
-            this.comboBoxP1CurrentCharacterWrite.FormattingEnabled = true;
-            this.comboBoxP1CurrentCharacterWrite.Location = new System.Drawing.Point(105, 312);
-            this.comboBoxP1CurrentCharacterWrite.Name = "comboBoxP1CurrentCharacterWrite";
-            this.comboBoxP1CurrentCharacterWrite.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxP1CurrentCharacterWrite.TabIndex = 62;
+            this.comboBoxP1StatusWrite.FormattingEnabled = true;
+            this.comboBoxP1StatusWrite.Location = new System.Drawing.Point(105, 312);
+            this.comboBoxP1StatusWrite.Name = "comboBoxP1StatusWrite";
+            this.comboBoxP1StatusWrite.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxP1StatusWrite.TabIndex = 62;
             // 
             // textBoxP1CreditsCountWrite
             // 
@@ -971,14 +997,14 @@
             this.checkBoxP1Score.TabIndex = 35;
             this.checkBoxP1Score.UseVisualStyleBackColor = true;
             // 
-            // checkBoxP1CurrentCharacter
+            // checkBoxP1Status
             // 
-            this.checkBoxP1CurrentCharacter.AutoSize = true;
-            this.checkBoxP1CurrentCharacter.Location = new System.Drawing.Point(229, 315);
-            this.checkBoxP1CurrentCharacter.Name = "checkBoxP1CurrentCharacter";
-            this.checkBoxP1CurrentCharacter.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxP1CurrentCharacter.TabIndex = 34;
-            this.checkBoxP1CurrentCharacter.UseVisualStyleBackColor = true;
+            this.checkBoxP1Status.AutoSize = true;
+            this.checkBoxP1Status.Location = new System.Drawing.Point(229, 315);
+            this.checkBoxP1Status.Name = "checkBoxP1Status";
+            this.checkBoxP1Status.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxP1Status.TabIndex = 34;
+            this.checkBoxP1Status.UseVisualStyleBackColor = true;
             // 
             // checkBoxP1CreditsCount
             // 
@@ -1079,14 +1105,14 @@
             this.labelP1Score.TabIndex = 23;
             this.labelP1Score.Text = "Score:";
             // 
-            // labelP1CurrentCharacter
+            // labelP1Status
             // 
-            this.labelP1CurrentCharacter.AutoSize = true;
-            this.labelP1CurrentCharacter.Location = new System.Drawing.Point(6, 288);
-            this.labelP1CurrentCharacter.Name = "labelP1CurrentCharacter";
-            this.labelP1CurrentCharacter.Size = new System.Drawing.Size(93, 13);
-            this.labelP1CurrentCharacter.TabIndex = 22;
-            this.labelP1CurrentCharacter.Text = "Current Character:";
+            this.labelP1Status.AutoSize = true;
+            this.labelP1Status.Location = new System.Drawing.Point(6, 288);
+            this.labelP1Status.Name = "labelP1Status";
+            this.labelP1Status.Size = new System.Drawing.Size(40, 13);
+            this.labelP1Status.TabIndex = 22;
+            this.labelP1Status.Text = "Status:";
             // 
             // labelP1CreditsCount
             // 
@@ -1178,13 +1204,13 @@
             this.labelP1LivesCount.TabIndex = 12;
             this.labelP1LivesCount.Text = "Lives Count:";
             // 
-            // comboBoxP1CurrentCharacterRead
+            // comboBoxP1StatusRead
             // 
-            this.comboBoxP1CurrentCharacterRead.FormattingEnabled = true;
-            this.comboBoxP1CurrentCharacterRead.Location = new System.Drawing.Point(105, 285);
-            this.comboBoxP1CurrentCharacterRead.Name = "comboBoxP1CurrentCharacterRead";
-            this.comboBoxP1CurrentCharacterRead.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxP1CurrentCharacterRead.TabIndex = 10;
+            this.comboBoxP1StatusRead.FormattingEnabled = true;
+            this.comboBoxP1StatusRead.Location = new System.Drawing.Point(105, 285);
+            this.comboBoxP1StatusRead.Name = "comboBoxP1StatusRead";
+            this.comboBoxP1StatusRead.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxP1StatusRead.TabIndex = 10;
             // 
             // comboBoxP1BombTypeRead
             // 
@@ -1204,6 +1230,7 @@
             // 
             // groupBoxGlobal
             // 
+            this.groupBoxGlobal.Controls.Add(this.buttonMissionCommplete);
             this.groupBoxGlobal.Controls.Add(this.textBoxContinueTimerWrite);
             this.groupBoxGlobal.Controls.Add(this.textBoxLevelTimerWrite);
             this.groupBoxGlobal.Controls.Add(this.textBoxContinueTimerRead);
@@ -1214,10 +1241,20 @@
             this.groupBoxGlobal.Controls.Add(this.labelLevelTimer);
             this.groupBoxGlobal.Location = new System.Drawing.Point(12, 12);
             this.groupBoxGlobal.Name = "groupBoxGlobal";
-            this.groupBoxGlobal.Size = new System.Drawing.Size(250, 82);
+            this.groupBoxGlobal.Size = new System.Drawing.Size(250, 108);
             this.groupBoxGlobal.TabIndex = 6;
             this.groupBoxGlobal.TabStop = false;
             this.groupBoxGlobal.Text = "Global";
+            // 
+            // buttonMissionCommplete
+            // 
+            this.buttonMissionCommplete.Location = new System.Drawing.Point(93, 72);
+            this.buttonMissionCommplete.Name = "buttonMissionCommplete";
+            this.buttonMissionCommplete.Size = new System.Drawing.Size(142, 23);
+            this.buttonMissionCommplete.TabIndex = 13;
+            this.buttonMissionCommplete.Text = "Mission Complete";
+            this.buttonMissionCommplete.UseVisualStyleBackColor = true;
+            this.buttonMissionCommplete.Click += new System.EventHandler(this.ButtonMissionCommplete_Click);
             // 
             // textBoxContinueTimerWrite
             // 
@@ -1283,17 +1320,267 @@
             this.labelLevelTimer.TabIndex = 2;
             this.labelLevelTimer.Text = "Level Timer:";
             // 
+            // groupBoxDebug
+            // 
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit15);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit14);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit13);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit12);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit11);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit10);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit9);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit8);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit7);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit6);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit5);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit4);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit3);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit2);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit1);
+            this.groupBoxDebug.Controls.Add(this.checkBoxBit0);
+            this.groupBoxDebug.Controls.Add(this.buttonLevelSelect);
+            this.groupBoxDebug.Controls.Add(this.labelLevelSelect);
+            this.groupBoxDebug.Controls.Add(this.comboBoxLevelSelect);
+            this.groupBoxDebug.Location = new System.Drawing.Point(12, 126);
+            this.groupBoxDebug.Name = "groupBoxDebug";
+            this.groupBoxDebug.Size = new System.Drawing.Size(250, 273);
+            this.groupBoxDebug.TabIndex = 12;
+            this.groupBoxDebug.TabStop = false;
+            this.groupBoxDebug.Text = "Debug";
+            // 
+            // checkBoxBit15
+            // 
+            this.checkBoxBit15.AutoSize = true;
+            this.checkBoxBit15.Location = new System.Drawing.Point(128, 244);
+            this.checkBoxBit15.Name = "checkBoxBit15";
+            this.checkBoxBit15.Size = new System.Drawing.Size(53, 17);
+            this.checkBoxBit15.TabIndex = 31;
+            this.checkBoxBit15.Text = "Bit 15";
+            this.toolTip1.SetToolTip(this.checkBoxBit15, "Muteki (Invincibility)");
+            this.checkBoxBit15.UseVisualStyleBackColor = true;
+            this.checkBoxBit15.CheckedChanged += new System.EventHandler(this.SetDebug2Flags);
+            // 
+            // checkBoxBit14
+            // 
+            this.checkBoxBit14.AutoSize = true;
+            this.checkBoxBit14.Location = new System.Drawing.Point(128, 221);
+            this.checkBoxBit14.Name = "checkBoxBit14";
+            this.checkBoxBit14.Size = new System.Drawing.Size(53, 17);
+            this.checkBoxBit14.TabIndex = 30;
+            this.checkBoxBit14.Text = "Bit 14";
+            this.toolTip1.SetToolTip(this.checkBoxBit14, "VIEW BODY RECT (View body hitbox)");
+            this.checkBoxBit14.UseVisualStyleBackColor = true;
+            this.checkBoxBit14.CheckedChanged += new System.EventHandler(this.SetDebug2Flags);
+            // 
+            // checkBoxBit13
+            // 
+            this.checkBoxBit13.AutoSize = true;
+            this.checkBoxBit13.Location = new System.Drawing.Point(128, 198);
+            this.checkBoxBit13.Name = "checkBoxBit13";
+            this.checkBoxBit13.Size = new System.Drawing.Size(53, 17);
+            this.checkBoxBit13.TabIndex = 29;
+            this.checkBoxBit13.Text = "Bit 13";
+            this.toolTip1.SetToolTip(this.checkBoxBit13, "VIEW ATTACK RECT (View attack hitbox)");
+            this.checkBoxBit13.UseVisualStyleBackColor = true;
+            this.checkBoxBit13.CheckedChanged += new System.EventHandler(this.SetDebug2Flags);
+            // 
+            // checkBoxBit12
+            // 
+            this.checkBoxBit12.AutoSize = true;
+            this.checkBoxBit12.Location = new System.Drawing.Point(128, 175);
+            this.checkBoxBit12.Name = "checkBoxBit12";
+            this.checkBoxBit12.Size = new System.Drawing.Size(53, 17);
+            this.checkBoxBit12.TabIndex = 28;
+            this.checkBoxBit12.Text = "Bit 12";
+            this.toolTip1.SetToolTip(this.checkBoxBit12, "VIEW GEO SCROLL A (Walkable ground)");
+            this.checkBoxBit12.UseVisualStyleBackColor = true;
+            this.checkBoxBit12.CheckedChanged += new System.EventHandler(this.SetDebug2Flags);
+            // 
+            // checkBoxBit11
+            // 
+            this.checkBoxBit11.AutoSize = true;
+            this.checkBoxBit11.Location = new System.Drawing.Point(128, 152);
+            this.checkBoxBit11.Name = "checkBoxBit11";
+            this.checkBoxBit11.Size = new System.Drawing.Size(53, 17);
+            this.checkBoxBit11.TabIndex = 27;
+            this.checkBoxBit11.Text = "Bit 11";
+            this.toolTip1.SetToolTip(this.checkBoxBit11, "VIEW GEO SCROLL B (Background)");
+            this.checkBoxBit11.UseVisualStyleBackColor = true;
+            this.checkBoxBit11.CheckedChanged += new System.EventHandler(this.SetDebug2Flags);
+            // 
+            // checkBoxBit10
+            // 
+            this.checkBoxBit10.AutoSize = true;
+            this.checkBoxBit10.Location = new System.Drawing.Point(128, 129);
+            this.checkBoxBit10.Name = "checkBoxBit10";
+            this.checkBoxBit10.Size = new System.Drawing.Size(53, 17);
+            this.checkBoxBit10.TabIndex = 26;
+            this.checkBoxBit10.Text = "Bit 10";
+            this.toolTip1.SetToolTip(this.checkBoxBit10, "???");
+            this.checkBoxBit10.UseVisualStyleBackColor = true;
+            this.checkBoxBit10.CheckedChanged += new System.EventHandler(this.SetDebug2Flags);
+            // 
+            // checkBoxBit9
+            // 
+            this.checkBoxBit9.AutoSize = true;
+            this.checkBoxBit9.Location = new System.Drawing.Point(128, 106);
+            this.checkBoxBit9.Name = "checkBoxBit9";
+            this.checkBoxBit9.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxBit9.TabIndex = 25;
+            this.checkBoxBit9.Text = "Bit 9";
+            this.toolTip1.SetToolTip(this.checkBoxBit9, "???");
+            this.checkBoxBit9.UseVisualStyleBackColor = true;
+            this.checkBoxBit9.CheckedChanged += new System.EventHandler(this.SetDebug2Flags);
+            // 
+            // checkBoxBit8
+            // 
+            this.checkBoxBit8.AutoSize = true;
+            this.checkBoxBit8.Location = new System.Drawing.Point(128, 83);
+            this.checkBoxBit8.Name = "checkBoxBit8";
+            this.checkBoxBit8.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxBit8.TabIndex = 24;
+            this.checkBoxBit8.Text = "Bit 8";
+            this.toolTip1.SetToolTip(this.checkBoxBit8, "VIEW INFORMATION (View debug information)");
+            this.checkBoxBit8.UseVisualStyleBackColor = true;
+            this.checkBoxBit8.CheckedChanged += new System.EventHandler(this.SetDebug2Flags);
+            // 
+            // checkBoxBit7
+            // 
+            this.checkBoxBit7.AutoSize = true;
+            this.checkBoxBit7.Location = new System.Drawing.Point(9, 244);
+            this.checkBoxBit7.Name = "checkBoxBit7";
+            this.checkBoxBit7.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxBit7.TabIndex = 23;
+            this.checkBoxBit7.Text = "Bit 7";
+            this.toolTip1.SetToolTip(this.checkBoxBit7, "VIEW PUSH RECT (View objects that block the players path)");
+            this.checkBoxBit7.UseVisualStyleBackColor = true;
+            this.checkBoxBit7.CheckedChanged += new System.EventHandler(this.SetDebug1Flags);
+            // 
+            // checkBoxBit6
+            // 
+            this.checkBoxBit6.AutoSize = true;
+            this.checkBoxBit6.Location = new System.Drawing.Point(9, 221);
+            this.checkBoxBit6.Name = "checkBoxBit6";
+            this.checkBoxBit6.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxBit6.TabIndex = 22;
+            this.checkBoxBit6.Text = "Bit 6";
+            this.toolTip1.SetToolTip(this.checkBoxBit6, "???");
+            this.checkBoxBit6.UseVisualStyleBackColor = true;
+            this.checkBoxBit6.CheckedChanged += new System.EventHandler(this.SetDebug1Flags);
+            // 
+            // checkBoxBit5
+            // 
+            this.checkBoxBit5.AutoSize = true;
+            this.checkBoxBit5.Location = new System.Drawing.Point(9, 198);
+            this.checkBoxBit5.Name = "checkBoxBit5";
+            this.checkBoxBit5.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxBit5.TabIndex = 21;
+            this.checkBoxBit5.Text = "Bit 5";
+            this.toolTip1.SetToolTip(this.checkBoxBit5, "???");
+            this.checkBoxBit5.UseVisualStyleBackColor = true;
+            this.checkBoxBit5.CheckedChanged += new System.EventHandler(this.SetDebug1Flags);
+            // 
+            // checkBoxBit4
+            // 
+            this.checkBoxBit4.AutoSize = true;
+            this.checkBoxBit4.Location = new System.Drawing.Point(9, 175);
+            this.checkBoxBit4.Name = "checkBoxBit4";
+            this.checkBoxBit4.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxBit4.TabIndex = 20;
+            this.checkBoxBit4.Text = "Bit 4";
+            this.toolTip1.SetToolTip(this.checkBoxBit4, "???");
+            this.checkBoxBit4.UseVisualStyleBackColor = true;
+            this.checkBoxBit4.CheckedChanged += new System.EventHandler(this.SetDebug1Flags);
+            // 
+            // checkBoxBit3
+            // 
+            this.checkBoxBit3.AutoSize = true;
+            this.checkBoxBit3.Location = new System.Drawing.Point(9, 152);
+            this.checkBoxBit3.Name = "checkBoxBit3";
+            this.checkBoxBit3.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxBit3.TabIndex = 19;
+            this.checkBoxBit3.Text = "Bit 3";
+            this.toolTip1.SetToolTip(this.checkBoxBit3, "Museigen POW Gun (Infinite Ammo)");
+            this.checkBoxBit3.UseVisualStyleBackColor = true;
+            this.checkBoxBit3.CheckedChanged += new System.EventHandler(this.SetDebug1Flags);
+            // 
+            // checkBoxBit2
+            // 
+            this.checkBoxBit2.AutoSize = true;
+            this.checkBoxBit2.Location = new System.Drawing.Point(9, 129);
+            this.checkBoxBit2.Name = "checkBoxBit2";
+            this.checkBoxBit2.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxBit2.TabIndex = 18;
+            this.checkBoxBit2.Text = "Bit 2";
+            this.toolTip1.SetToolTip(this.checkBoxBit2, "Museigen Grenade (Infinite Grenades)");
+            this.checkBoxBit2.UseVisualStyleBackColor = true;
+            this.checkBoxBit2.CheckedChanged += new System.EventHandler(this.SetDebug1Flags);
+            // 
+            // checkBoxBit1
+            // 
+            this.checkBoxBit1.AutoSize = true;
+            this.checkBoxBit1.Location = new System.Drawing.Point(9, 106);
+            this.checkBoxBit1.Name = "checkBoxBit1";
+            this.checkBoxBit1.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxBit1.TabIndex = 17;
+            this.checkBoxBit1.Text = "Bit 1";
+            this.toolTip1.SetToolTip(this.checkBoxBit1, "VIEW PA Point (sprite showing respawn point)");
+            this.checkBoxBit1.UseVisualStyleBackColor = true;
+            this.checkBoxBit1.CheckedChanged += new System.EventHandler(this.SetDebug1Flags);
+            // 
+            // checkBoxBit0
+            // 
+            this.checkBoxBit0.AutoSize = true;
+            this.checkBoxBit0.Location = new System.Drawing.Point(9, 83);
+            this.checkBoxBit0.Name = "checkBoxBit0";
+            this.checkBoxBit0.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxBit0.TabIndex = 16;
+            this.checkBoxBit0.Text = "Bit 0";
+            this.toolTip1.SetToolTip(this.checkBoxBit0, "???");
+            this.checkBoxBit0.UseVisualStyleBackColor = true;
+            this.checkBoxBit0.CheckedChanged += new System.EventHandler(this.SetDebug1Flags);
+            // 
+            // buttonLevelSelect
+            // 
+            this.buttonLevelSelect.Location = new System.Drawing.Point(93, 43);
+            this.buttonLevelSelect.Name = "buttonLevelSelect";
+            this.buttonLevelSelect.Size = new System.Drawing.Size(142, 23);
+            this.buttonLevelSelect.TabIndex = 15;
+            this.buttonLevelSelect.Text = "Select";
+            this.buttonLevelSelect.UseVisualStyleBackColor = true;
+            this.buttonLevelSelect.Click += new System.EventHandler(this.ButtonLevelSelect_Click);
+            // 
+            // labelLevelSelect
+            // 
+            this.labelLevelSelect.AutoSize = true;
+            this.labelLevelSelect.Location = new System.Drawing.Point(6, 19);
+            this.labelLevelSelect.Name = "labelLevelSelect";
+            this.labelLevelSelect.Size = new System.Drawing.Size(69, 13);
+            this.labelLevelSelect.TabIndex = 14;
+            this.labelLevelSelect.Text = "Level Select:";
+            // 
+            // comboBoxLevelSelect
+            // 
+            this.comboBoxLevelSelect.DropDownWidth = 350;
+            this.comboBoxLevelSelect.FormattingEnabled = true;
+            this.comboBoxLevelSelect.Location = new System.Drawing.Point(93, 16);
+            this.comboBoxLevelSelect.Name = "comboBoxLevelSelect";
+            this.comboBoxLevelSelect.Size = new System.Drawing.Size(142, 21);
+            this.comboBoxLevelSelect.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.groupBoxDebug);
             this.Controls.Add(this.groupBoxOverride);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBoxLog);
             this.Controls.Add(this.groupBoxPlayer2);
             this.Controls.Add(this.groupBoxPlayer1);
             this.Controls.Add(this.groupBoxGlobal);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Form1";
             this.groupBoxOverride.ResumeLayout(false);
@@ -1307,6 +1594,8 @@
             this.groupBoxPlayer1.PerformLayout();
             this.groupBoxGlobal.ResumeLayout(false);
             this.groupBoxGlobal.PerformLayout();
+            this.groupBoxDebug.ResumeLayout(false);
+            this.groupBoxDebug.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1330,7 +1619,7 @@
         private System.Windows.Forms.ComboBox comboBoxP2Score1;
         private System.Windows.Forms.ComboBox comboBoxP2BombTypeWrite;
         private System.Windows.Forms.ComboBox comboBoxP2WeaponTypeWrite;
-        private System.Windows.Forms.ComboBox comboBoxP2CurrentCharacterWrite;
+        private System.Windows.Forms.ComboBox comboBoxP2StatusWrite;
         private System.Windows.Forms.TextBox textBoxP2CreditsCountWrite;
         private System.Windows.Forms.TextBox textBoxP2VehicleHealthCountWrite;
         private System.Windows.Forms.TextBox textBoxP2VehicleAmmoCountWrite;
@@ -1349,7 +1638,7 @@
         private System.Windows.Forms.TextBox textBoxP2BombCountRead;
         private System.Windows.Forms.TextBox textBoxP2ScoreRead;
         private System.Windows.Forms.CheckBox checkBoxP2Score;
-        private System.Windows.Forms.CheckBox checkBoxP2CurrentCharacter;
+        private System.Windows.Forms.CheckBox checkBoxP2Status;
         private System.Windows.Forms.CheckBox checkBoxP2CreditsCount;
         private System.Windows.Forms.CheckBox checkBoxP2VehicleHealthCount;
         private System.Windows.Forms.CheckBox checkBoxP2VehicleAmmoCount;
@@ -1361,7 +1650,7 @@
         private System.Windows.Forms.CheckBox checkBoxP2InvincibilityTimer;
         private System.Windows.Forms.CheckBox checkBoxP2LivesCount;
         private System.Windows.Forms.Label labelP2Score;
-        private System.Windows.Forms.Label labelP2CurrentCharacter;
+        private System.Windows.Forms.Label labelP2Status;
         private System.Windows.Forms.Label labelP2CreditsCount;
         private System.Windows.Forms.Label labelP2VehicleHealthCount;
         private System.Windows.Forms.Label labelP2VehicleAmmoCount;
@@ -1372,7 +1661,7 @@
         private System.Windows.Forms.Label labelP2POWsRescued;
         private System.Windows.Forms.Label labelP2InvincibilityTimer;
         private System.Windows.Forms.Label labelP2LivesCount;
-        private System.Windows.Forms.ComboBox comboBoxP2CurrentCharacterRead;
+        private System.Windows.Forms.ComboBox comboBoxP2StatusRead;
         private System.Windows.Forms.ComboBox comboBoxP2BombTypeRead;
         private System.Windows.Forms.ComboBox comboBoxP2WeaponTypeRead;
         private System.Windows.Forms.GroupBox groupBoxPlayer1;
@@ -1382,7 +1671,7 @@
         private System.Windows.Forms.ComboBox comboBoxP1Score1;
         private System.Windows.Forms.ComboBox comboBoxP1BombTypeWrite;
         private System.Windows.Forms.ComboBox comboBoxP1WeaponTypeWrite;
-        private System.Windows.Forms.ComboBox comboBoxP1CurrentCharacterWrite;
+        private System.Windows.Forms.ComboBox comboBoxP1StatusWrite;
         private System.Windows.Forms.TextBox textBoxP1CreditsCountWrite;
         private System.Windows.Forms.TextBox textBoxP1VehicleHealthCountWrite;
         private System.Windows.Forms.TextBox textBoxP1VehicleAmmoCountWrite;
@@ -1401,7 +1690,7 @@
         private System.Windows.Forms.TextBox textBoxP1LivesCountWrite;
         private System.Windows.Forms.TextBox textBoxP1ScoreRead;
         private System.Windows.Forms.CheckBox checkBoxP1Score;
-        private System.Windows.Forms.CheckBox checkBoxP1CurrentCharacter;
+        private System.Windows.Forms.CheckBox checkBoxP1Status;
         private System.Windows.Forms.CheckBox checkBoxP1CreditsCount;
         private System.Windows.Forms.CheckBox checkBoxP1VehicleHealthCount;
         private System.Windows.Forms.CheckBox checkBoxP1VehicleAmmoCount;
@@ -1413,7 +1702,7 @@
         private System.Windows.Forms.CheckBox checkBoxP1InvincibilityTimer;
         private System.Windows.Forms.CheckBox checkBoxP1LivesCount;
         private System.Windows.Forms.Label labelP1Score;
-        private System.Windows.Forms.Label labelP1CurrentCharacter;
+        private System.Windows.Forms.Label labelP1Status;
         private System.Windows.Forms.Label labelP1CreditsCount;
         private System.Windows.Forms.Label labelP1VehicleHealthCount;
         private System.Windows.Forms.Label labelP1VehicleAmmoCount;
@@ -1424,7 +1713,7 @@
         private System.Windows.Forms.Label labelP1POWsRescued;
         private System.Windows.Forms.Label labelP1InvincibilityTimer;
         private System.Windows.Forms.Label labelP1LivesCount;
-        private System.Windows.Forms.ComboBox comboBoxP1CurrentCharacterRead;
+        private System.Windows.Forms.ComboBox comboBoxP1StatusRead;
         private System.Windows.Forms.ComboBox comboBoxP1BombTypeRead;
         private System.Windows.Forms.ComboBox comboBoxP1WeaponTypeRead;
         private System.Windows.Forms.GroupBox groupBoxGlobal;
@@ -1436,6 +1725,28 @@
         private System.Windows.Forms.CheckBox checkBoxLevelTimer;
         private System.Windows.Forms.Label labelContinueTimer;
         private System.Windows.Forms.Label labelLevelTimer;
+        private System.Windows.Forms.Button buttonMissionCommplete;
+        private System.Windows.Forms.GroupBox groupBoxDebug;
+        private System.Windows.Forms.CheckBox checkBoxBit7;
+        private System.Windows.Forms.CheckBox checkBoxBit6;
+        private System.Windows.Forms.CheckBox checkBoxBit5;
+        private System.Windows.Forms.CheckBox checkBoxBit4;
+        private System.Windows.Forms.CheckBox checkBoxBit3;
+        private System.Windows.Forms.CheckBox checkBoxBit2;
+        private System.Windows.Forms.CheckBox checkBoxBit1;
+        private System.Windows.Forms.CheckBox checkBoxBit0;
+        private System.Windows.Forms.Button buttonLevelSelect;
+        private System.Windows.Forms.Label labelLevelSelect;
+        private System.Windows.Forms.ComboBox comboBoxLevelSelect;
+        private System.Windows.Forms.CheckBox checkBoxBit15;
+        private System.Windows.Forms.CheckBox checkBoxBit14;
+        private System.Windows.Forms.CheckBox checkBoxBit13;
+        private System.Windows.Forms.CheckBox checkBoxBit12;
+        private System.Windows.Forms.CheckBox checkBoxBit11;
+        private System.Windows.Forms.CheckBox checkBoxBit10;
+        private System.Windows.Forms.CheckBox checkBoxBit9;
+        private System.Windows.Forms.CheckBox checkBoxBit8;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
