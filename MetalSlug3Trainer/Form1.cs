@@ -1,15 +1,19 @@
-﻿using System;
+﻿/**
+ *  File           Form1.cs
+ *  Brief          Metal Slug 3 (GOG Version) PC Trainer
+ *  Copyright      2025 Shawn M. Crawford [sleepy]
+ *  Date           10/30/2025
+ *
+ *  Author         Shawn M. Crawford [sleepy]
+ *
+ */
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Net;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MetalSlug3Trainer
