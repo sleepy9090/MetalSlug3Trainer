@@ -1,6 +1,6 @@
 # A game trainer for Metal Slug 3 (Gog Version, setup_metal_slug_3_gog-5_(12274))
 
-<img width="1368" height="800" alt="image" src="https://github.com/user-attachments/assets/368f913f-cf5f-46b7-9a2a-9b1058bc59ed" />
+<img width="786" height="593" alt="image" src="https://github.com/user-attachments/assets/42f619e7-6904-40a9-a241-0b300d829e7a" />
 
 <img width="1368" height="800" alt="image" src="https://github.com/user-attachments/assets/230d9f74-c6b7-46ff-acb1-308aa2564783" />
 
